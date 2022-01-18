@@ -1,0 +1,63 @@
+header {
+    color: white;
+    height: 80px;
+    text-align: center;
+}
+
+#facturas {
+    color: yellow;
+    width: 25px;
+    height: 25px;
+}
+
+#reporte {
+    color: limegreen;
+    width: 25px;
+    height: 25px;
+}
+
+#datos {
+    color: #2228EA;
+    width: 25px;
+    height: 25px;
+}
+
+li {
+    padding: 15px;
+}
+
+#cerrar {
+    color: #F92B3A;
+    width: 25px;
+    height: 25px;
+}
+
+#log {
+    height: 72vh;
+}
+
+#menu {
+    color: white;
+    font-size: large;
+}
+
+#nombreSistema {
+    color: #7FD455;
+}
+
+hrmenu {
+    background-color: white;
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    color: white;
+    bottom: 0;
+}
+
+#imagenlog {
+    vertical-align: middle;
+    text-align: center;
+}

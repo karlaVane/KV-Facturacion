@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap -->
+    <link href="{% static 'Facturacion/Bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{% static 'Facturacion/estilos.css' %}" rel="stylesheet">
+    <link href="{% static 'Facturacion/sidebar.css' %}" rel="stylesheet">
+    <!-- Font-awesome-->
+    <script src="{% static 'icons/js/all.min.js' %}"></script>
+    <link href="{% static 'icons/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <main>
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+
+            <img src="{% static 'images/logo.png' %}" class="img-fluid" height="20">
+            <br>
+            <center><span class="fs-4">KV - Facturación</span></center>
+            <hr id="hrmenu">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                    <a href="{% url 'MisFacturas' %}" class="nav-link text-white {% if request.path == '/mis_facturas' %}active{% endif %}">
+                        <i class="fab fa-elementor" id="facturas"></i> Mis Facturas
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'ReporteGeneral' %}" class="nav-link text-white {% if request.path == '/reporte_general' %}active{% endif %}">
+                        <i class="fas fa-file" id="reporte"></i> Reporte General
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'MisDatos' %}" class="nav-link text-white {% if request.path == '/mis_datos' %}active{% endif %}">
+                        <i class="fas fa-id-badge" id="datos"></i> Mis datos
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-white">
+                        <i class="fas fa-times-circle" id="cerrar"></i> Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="b-example-divider"></div>
+        <div class="col p-4">
+            <!-- Contenido cambiante -->
+            {% block content %} {% endblock %}
+
+        </div>
+
+    </main>
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            Sistema de Facturación electrónica en Ecuador<br> Desarrollado por: Karla Moyón<br> 2022 Copyright &copy
+        </div>
+    </footer>
+    <!-- Bootstrap -->
+    <script src="{% static 'Facturacion/Bootstrap/js/jquery.js' %}"></script>
+    <script src="{% static 'Facturacion/Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

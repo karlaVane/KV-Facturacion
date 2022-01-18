@@ -1,3 +1,4 @@
+from turtle import mode
 from django.db import models
 # Create your models here.
 
@@ -42,20 +43,24 @@ class Punto_emision(models.Model):
     
 class Consumidor(models.Model):
     identificacion = models.CharField(primary_key=True,max_length=15)
-    nombre = models.CharField(max_length=50)
-    correo = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=500)
+    correo = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=300)
     telefono = models.CharField(max_length=10)
+    def __str__(self):
+        return self.nombre
 
 class Pedido (models.Model): 
     num_pedido = models.CharField(primary_key=True,max_length=50)
     id_consumidor = models.ForeignKey(Consumidor,on_delete=models.CASCADE,null=True)
+    fecha_pedido = models.CharField(max_length=50)
     estado_pedido = models.CharField(max_length=20)
     envio = models.BooleanField(default=False)
     href_pedido = models.URLField()
     ##pedido_completo = models.JSONField() 
     valor_total = models.DecimalField(max_digits=9, decimal_places=4,default=0)
     total_impuestos = models.DecimalField(max_digits=9, decimal_places=4,default=0)
+    valor_transporte = models.DecimalField(max_digits=9, decimal_places=4,default=0)
 
 class Detalle_pedido(models.Model):
     id_pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE,null=False)
@@ -83,4 +88,8 @@ class Valores(models.Model):
     id_documento = models.ForeignKey(Documento,on_delete=models.CASCADE,null=True)
     nombre_valor = models.CharField(max_length=30)
     valor = models.DecimalField(max_digits=9,decimal_places=4,default=0)
-    
+
+class Actualizaciones(models.Model):
+    fecha_actualizacion = models.CharField(max_length=50)
+    ultima_fecha_pedido = models.CharField(max_length=50)
+    ultimo_num_pedido = models.CharField(max_length=10)

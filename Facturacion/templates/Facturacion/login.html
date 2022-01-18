@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <!-- Bootstrap -->
+    <link href="{% static 'Facturacion/Bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{% static 'Facturacion/estilos.css' %}" rel="stylesheet">
+    <link href="{% static 'Facturacion/login.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="log">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom bg-dark">
+        <img src="{% static 'images/logo.png' %}" height="50px">
+        <h2 id="nombreSistema"> KV - Facturacion </h2>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+                    <img src="{% static 'images/facturacion.png' %}" id="imagenlog">
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+                    <form style="width: 23rem;">
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form2Example18">Correo electrónico</label>
+                            <input type="email" id="form2Example18" class="form-control form-control-lg" />
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form2Example28">Contraseña</label>
+                            <input type="password" id="form2Example28" class="form-control form-control-lg" />
+                        </div>
+                        <div class="pt-1 mb-4">
+                            <button class="btn btn-success btn-lg btn-block" type="button">Iniciar Sesión</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            Sistema de Facturación electrónica en Ecuador<br> Desarrollado por: Karla Moyón<br> 2022 Copyright &copy
+        </div>
+    </footer>
+    <!-- Bootstrap -->
+    <script src="{% static 'Facturacion/Bootstrap/js/jquery.js' %}"></script>
+    <script src="{% static 'Facturacion/Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

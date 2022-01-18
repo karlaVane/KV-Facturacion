@@ -3,12 +3,23 @@ from Facturacion.models import Contribuyente,Tipo_comprobante
 from django.http import HttpResponse
 
 # Create your views here.
-"""
-def cred_WooCommerce(request):
-    for datos in Contribuyente.objects.filter(correo= 'karla.vanessa@outlook.es'):
-        cred1=datos.consumer_key
-        cred2=datos.consumer_secret
-    print (cred1,"\n",cred2)
-    return HttpResponse(cred1)
-"""
 
+def logeo(request):
+
+    return render(request,'Facturacion/login.html')
+
+def Mis_facturas(request):
+
+    return render(request,'Facturacion/mis_facturas.html')
+
+def vista_prev_fact(request):
+
+    return render(request,'Facturacion/vista_previa.html')
+
+def reporte_general(request):
+
+    return render(request,'Facturacion/reporte_general.html')
+
+def mis_datos(request):
+
+    return render(request,'Facturacion/mis_datos.html')
