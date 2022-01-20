@@ -14,10 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from unicodedata import name
 from django.contrib import admin
 from django.urls import path,include
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Facturacion.urls')) #Para enlazar las urls de las aplicaciones con el proyecto
+    path('',include('Facturacion.urls')), #Para enlazar las urls de las aplicaciones con el proyecto
+    #path('',LoginView.as_view(template_name='Facturacion/login.html'),name= 'login'),
 ]

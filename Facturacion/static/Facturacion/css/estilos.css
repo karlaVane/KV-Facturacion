@@ -1,0 +1,29 @@
+/* ICONOS MENU */
+
+#facturas {
+    color: yellow;
+}
+
+#reporte {
+    color: limegreen;
+}
+
+#datos {
+    color: #2228EA;
+}
+
+#cerrar {
+    color: #F92B3A;
+}
+
+
+/* ------- */
+
+#tit_misFacturas {
+    text-align: center;
+    color: #2228EA;
+}
+
+#espaciadoicon {
+    margin-right: 15px;
+}

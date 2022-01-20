@@ -1,10 +1,55 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
-<h3>Bienvenido Usuario</h3>
-<p class="lead">
-    An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
-<hr>
-<ul class="list-unstyled">
-    <li>
-        <h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
-</ul>
+<div class="container-fluid px-4">
+    <h3 class="mt-4"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@</h3>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">{% for contri in contribuyente %} {{ contri.razon_social }} {% endfor %} </li>
+    </ol>
+    <h2 id="tit_misFacturas"><i class="fab fa-elementor" id="espaciadoicon"></i>Mis Facturas</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i> <b>PEDIDOS: </b>
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr class="bg-info">
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th># Pedido</th>
+                        <th>Valor Pedido</th>
+                        <th>Estado Compra</th>
+                        <th>Estado Factura</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th># Pedido</th>
+                        <th>Valor Pedido</th>
+                        <th>Estado Compra</th>
+                        <th>Estado Factura</th>
+                        <th>Acciones</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for pedido in pedidos %}
+                    <tr>
+                        <td> {{ pedido.fecha_pedido }} </td>
+                        <td> {{ pedido.id_consumidor }} </td>
+                        <td> {{ pedido.num_pedido }}</td>
+                        <td> {{ pedido.valor_total }} </td>
+                        <td> {{ pedido.estado_pedido }} </td>
+                        <td> </td>
+                        <td> <a href="#"><i class="far fa-eye"></i></a> <a href="#"><i class="fas fa-file-export"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <center><a class="btn btn-success" href="#"><i class="fas fa-sync" id="espaciadoicon"></i> Actualizar</a></center>
+</div>
 {% endblock %}
