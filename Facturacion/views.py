@@ -1,21 +1,16 @@
 from django.shortcuts import redirect, render
 from Facturacion.models import Pedido, Contribuyente,Tipo_comprobante
-from django.http import HttpResponse
+from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import  User
 # Create your views here.
 
 def login(request):
-    """
-    if request.method == 'POST':
-        user = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=user, password=password)
-        if user is None:
-            messages.error(request,("mal"))
-    """
+    
     return render(request,'Facturacion/login.html')
+
     
 @login_required
 def Mis_facturas(request):
