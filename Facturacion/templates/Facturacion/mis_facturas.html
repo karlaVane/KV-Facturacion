@@ -1,10 +1,12 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
 <div class="container-fluid px-4">
-    <h3 class="mt-4"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@</h3>
+    <h3 class="mt-4" id="bienvenido"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@</h3>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">{% for contri in contribuyente %} {{ contri.razon_social }} {% endfor %} </li>
     </ol>
-    <h2 id="tit_misFacturas"><i class="fab fa-elementor" id="espaciadoicon"></i>Mis Facturas</h2>
+    <h2 id="tit_misFacturas">
+        <i class="fab fa-elementor" id="espaciadoicon" style="color: yellow;"></i> Mis Facturas
+    </h2>
 
     <div class="card mb-4">
         <div class="card-header">
@@ -13,14 +15,14 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr class="bg-info">
-                        <th>Fecha</th>
-                        <th>Cliente</th>
-                        <th># Pedido</th>
-                        <th>Valor Pedido</th>
-                        <th>Estado Compra</th>
-                        <th>Estado Factura</th>
-                        <th>Acciones</th>
+                    <tr class="bg-primary" id="encabezado_tabla">
+                        <th id="centrar">Fecha</th>
+                        <th id="centrar">Cliente</th>
+                        <th id="centrar"># Pedido</th>
+                        <th id="centrar">Valor Pedido</th>
+                        <th id="centrar">Estado Compra</th>
+                        <th id="centrar">Estado Factura</th>
+                        <th id="centrar">Acciones</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -41,15 +43,34 @@
                         <td> {{ pedido.id_consumidor }} </td>
                         <td> {{ pedido.num_pedido }}</td>
                         <td> {{ pedido.valor_total }} </td>
-                        <td> {{ pedido.estado_pedido }} </td>
+                        {% if pedido.estado_pedido == 'completed'%}
+                        <td id="estado_completo"> Completado</td>
+                        {% elif pedido.estado_pedido == 'on-hold' %}
+                        <td id="estado_espera"> En espera </td>
+                        {% elif pedido.estado_pedido == 'cancelled' %}
+                        <td id="estado_cancelado"> Cancelado </td>
+                        {% elif pedido.estado_pedido == 'pending' %}
+                        <td id="estado_pendiente"> Pendiente </td>
+                        {% elif pedido.estado_pedido == 'processing' %}
+                        <td id="estado_procesando"> En proceso </td>
+                        {% elif pedido.estado_pedido == 'refunded' %}
+                        <td id="estado_refunded"> Reintegrado </td>
+                        {% elif pedido.estado_pedido == 'failed' %}
+                        <td id="estado_failed"> Fallido </td>
+                        {% elif pedido.estado_pedido == 'trash' %}
+                        <td id="estado_trash"> Basura </td>
+                        {% endif %}
                         <td> </td>
-                        <td> <a href="#"><i class="far fa-eye"></i></a> <a href="#"><i class="fas fa-file-export"></i></a></td>
+                        <td class="text-center">
+                            <a href="#"><i class="far fa-eye" id="icon_visualizar"></i></a>
+                            <a href="#"><i class="fas fa-file-export" id="icon_facturar"></i></a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    <center><a class="btn btn-success" href="#"><i class="fas fa-sync" id="espaciadoicon"></i> Actualizar</a></center>
+    <center><a class="btn btn-warning" href="#"><i class="fas fa-sync" id="espaciadoicon"></i> Actualizar</a></center>
 </div>
 {% endblock %}

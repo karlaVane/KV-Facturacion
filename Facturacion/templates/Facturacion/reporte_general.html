@@ -1,3 +1,140 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
-<h3>Reporte General</h3>
+<div class="container-fluid px-4 mt-3">
+
+    <h2 id="tit_misFacturas">
+        <i class="fab fa-elementor" id="espaciadoicon" style="color: limegreen;"></i> Reporte General
+    </h2>
+    <br>
+    <div class="row">
+        <!-- TOTAL EN VENTAS -->
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">
+                    <h5 id="reporte"><i class="fas fa-cash-register" id="espaciadoicon"></i>Total en ventas </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters justify-content-center" id="card_ventas">
+                        <div class="col mr-2 text-center">
+                            <br>
+                            <div class="h2 mb-0 font-weight-bold"> $40,000</div>
+                            </br>
+                            Subtotal: $</br>
+                            IVA: $
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" id="centrar">
+                    Transacciones:
+                </div>
+            </div>
+        </div>
+        <!-- PRODUCTOS MAS VENDIDOS -->
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">
+                    <h5 id="tit_card_prod"><i class="fas fa-cash-register" id="espaciadoicon"></i>Productos más vendidos</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="table-warning">
+                                <th scope="col">#</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Valor </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td> $</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td> $</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td> $</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <!-- TOTAL DE CLIENTES -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">
+                    <h5 id="datos"><i class="fas fa-users" id="espaciadoicon"></i>Total de clientes </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center" id="card_clientes">
+                        <div class="col mr-2 text-center">
+                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="text-xs font-weight-bold mb-1">
+                                Clientes</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" id="centrar">
+                    últimos 30 días
+                </div>
+            </div>
+        </div>
+
+        <!-- Consumo de promedio Card Example -->
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">
+                    <h5 id="titulo_cons_promedio"><i class="fas fa-hand-holding-usd" id="espaciadoicon"></i>Consumo promedio</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center" id="card_consumo_promedio">
+                        <div class="col mr-2 text-center">
+                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="text-xs font-weight-bold mb-1">
+                                Promedio de consumo por compra</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" id="centrar">
+                    últimos 30 días
+                </div>
+            </div>
+        </div>
+        <!-- Promedio de compras-->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">
+                    <h5 id="titulo_prom_compras"><i class="fas fa-shopping-cart" id="espaciadoicon"></i>Promedio de compras</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center" id="card_promedio_compras">
+                        <div class="col mr-2 text-center">
+                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="text-xs font-weight-bold mb-1">
+                                Número de compras promedio por cliente</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" id="centrar">
+                    últimos 30 días
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'Facturacion/js/jquery.easing.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'Facturacion/js/sb-admin-2.min.js' %}"></script>
 {% endblock %}

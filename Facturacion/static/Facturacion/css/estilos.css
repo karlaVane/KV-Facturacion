@@ -27,3 +27,94 @@
 #espaciadoicon {
     margin-right: 15px;
 }
+
+#icon_visualizar {
+    color: #F92B3A;
+    margin-right: 15px;
+}
+
+#icon_facturar {
+    color: limegreen;
+}
+
+#bienvenido {
+    color: #2A9E17;
+}
+
+#encabezado_tabla {
+    color: white;
+}
+
+#centrar {
+    text-align: center;
+}
+
+
+/* --- ESTADOS PEDIDOS --- */
+
+#estado_completo {
+    color: #2A9E17;
+}
+
+#estado_espera {
+    color: slategrey;
+}
+
+#estado_cancelado {
+    color: red;
+}
+
+#estado_pendiente {
+    color: yellow;
+}
+
+#estado_procesando {
+    color: #F47B03;
+}
+
+#estado_refunded {
+    color: #319791;
+}
+
+#estado_failed {
+    color: #A56D62;
+}
+
+#estado_trash {
+    color: #DC1797;
+}
+
+
+/* --------------- */
+
+#card_clientes {
+    background-color: #6AA6D5;
+    color: white;
+}
+
+#card_consumo_promedio {
+    background-color: #F7EA82;
+    color: #D9953F;
+}
+
+#titulo_cons_promedio {
+    color: #D9953F;
+}
+
+#card_promedio_compras {
+    background-color: #343E5D;
+    color: white;
+}
+
+#titulo_prom_compras {
+    color: #343E5D;
+}
+
+#card_ventas {
+    background-color: #2FB650;
+    color: white;
+}
+
+#tit_card_prod {
+    color: #A93032;
+}

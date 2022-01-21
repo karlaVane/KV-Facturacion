@@ -3,73 +3,65 @@
 
 <head>
     {% load static %}
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>KV - Facturación</title>
-    <link href="{% static 'Facturacion/css/styles.css' %}" rel="stylesheet" />
-    <link href="{% static 'Facturacion/css/estilos.css' %}" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'Facturacion/css/login.css' %}" rel="stylesheet">
 </head>
 
-<body class="sb-nav-fixed">
-
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <span class="navbar-brand" href="#">
-            <img src="{% static 'images/logo.png' %}" width="50" height="30" class="d-inline-block align-top" alt=""> KV - Facturación
-        </span>
-    </nav>
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row mt-5 align-items-center justify-content-between">
-                        <div class="col-lg-5 align-items-center justify-content-between mt-5">
-                            <img src="{% static 'images/facturacion.png' %}">
-                        </div>
-                        <div class="col-lg-5 align-items-center justify-content-between">
-                            <div class="card shadow-lg border-5 rounded-lg mt-5 ">
-                                <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4"><i class="fas fa-user-circle" id="espaciadoicon"></i>Iniciar sesión</h3>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                            <label for="inputEmail">Correo electrónico</label>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row mt-5 ml-1 mr-1 mb-5">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img src="{% static 'images/facturacion.png' %}">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4"><b>KV - FACTURACIÓN</b></h1>
+                                    </div>
+                                    <hr>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresar correo electrónico">
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                            <label for="inputPassword">Contraseña</label>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
                                         </div>
 
-                                        <div class="text-center">
-                                            <a class="btn btn-success" href="index.html"> <i class="fas fa-user-check" id="espaciadoicon"></i>Aceptar</a>
-                                        </div>
+                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                            <i class="fas fa-user-check" id="espaciadoicon"></i>Iniciar Sesión
+                                        </a>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-dark mt-auto">
-                <div class="container-fluid px-4">
-                    <!--<div class="d-flex align-items-center justify-content-between small"></div>
-                    <div class="text-center small">-->
-
-                    <div class="d-flex justify-content-center small">
-                        <div class="text-muted">Copyright &copy; Facturación Electrónica en Ecuador 2022 <br>Desarrollado por: Karla Moyón</br>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            </div>
         </div>
     </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{% static 'Facturacion/js/scripts.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'Facturacion/js/jquery.easing.min.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'Facturacion/js/sb-admin-2.min.js' %}"></script>
+</body>
+
+</html>
 </body>
 
 </html>
