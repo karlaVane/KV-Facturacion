@@ -1,9 +1,7 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
 <div class="container-fluid px-4">
-    <h3 class="mt-4" id="bienvenido"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@</h3>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">{% for contri in contribuyente %} {{ contri.razon_social }} {% endfor %} </li>
-    </ol>
+    <h3 class="mt-4" id="datos"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@ {{ user.username}}</h3>
+    <hr>
     <h2 id="tit_misFacturas">
         <i class="fab fa-elementor" id="espaciadoicon" style="color: yellow;"></i> Mis Facturas
     </h2>
