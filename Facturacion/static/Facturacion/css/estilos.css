@@ -118,3 +118,43 @@
 #tit_card_prod {
     color: #A93032;
 }
+
+#borde_c {
+    background-color: #E5E3DC;
+    padding: 20px;
+}
+
+#icon_ruc {
+    color: #2A9E17;
+    margin-right: 20px;
+}
+
+#icon_razon {
+    color: #ED6C0D;
+    margin-right: 20px;
+}
+
+#icon_tienda {
+    color: #C820B8;
+    margin-right: 20px;
+}
+
+#icon_email {
+    color: #44558F;
+    margin-right: 20px;
+}
+
+#icon_direccion {
+    color: yellow;
+    margin-right: 20px;
+}
+
+#icon_telefono {
+    color: #3AB5D1;
+    margin-right: 20px;
+}
+
+#icon_fechalimit {
+    color: #4F6066;
+    margin-right: 20px;
+}

@@ -1,15 +1,17 @@
 from re import search
 from django.contrib import admin
-from Facturacion.models import Tipo_comprobante, Contribuyente,Establecimiento,Punto_emision,Consumidor, Pedido,Detalle_pedido
+from Facturacion.models import Contribuyente, Tipo_comprobante, Establecimiento,Punto_emision,Consumidor, Pedido,Detalle_pedido, Usuario
 
 # Register your models here.
+class UsuarioAdmin (admin.ModelAdmin):
+    list_display = ('id','username','email','is_superuser','is_staff','is_active')
 
 class ComprobanteAdmin (admin.ModelAdmin):
     list_display = ("cod_comprobante","nombre_comprobante")
     search_fields = ("cod_comprobante","nombre_comprobante")
 
 class ContribuyenteAdmin(admin.ModelAdmin):
-    list_display = ("RUC","razon_social","contabilidad","correo","direccion","telefono")
+    list_display = ("RUC","razon_social","contabilidad","direccion","telefono")
     search_fields = ("RUC","razon_social")
 
 class EstablecimientoAdmin(admin.ModelAdmin):
@@ -36,9 +38,11 @@ class Pedido_Admin(admin.ModelAdmin):
     inlines = [Det_pedidosAdmin]
     search_fields = ('num_pedido',)
 
+admin.site.register(Usuario,UsuarioAdmin)
 admin.site.register(Pedido,Pedido_Admin)
 admin.site.register(Consumidor,ConsumidorAdmin)
 admin.site.register(Tipo_comprobante,ComprobanteAdmin)
 admin.site.register(Contribuyente,ContribuyenteAdmin)
 admin.site.register(Establecimiento,EstablecimientoAdmin)
 admin.site.register(Punto_emision,EmisionAdmin)
+

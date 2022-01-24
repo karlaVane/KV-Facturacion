@@ -1,6 +1,7 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
 <div class="container-fluid px-4">
-    <h3 class="mt-4" id="datos"><i class="fas fa-user-alt" id="espaciadoicon"></i>Bienvenid@ {{ user.username}}</h3>
+    <h3 class="mt-4"> <img src="{% static 'images/usuario.png' %}" width="70" height="50"> Bienvenid@ {{ user.username }}
+    </h3>
     <hr>
     <h2 id="tit_misFacturas">
         <i class="fab fa-elementor" id="espaciadoicon" style="color: cornflowerblue;"></i> Mis Facturas
@@ -14,6 +15,17 @@
     <!--- ---------- -->
     <form action="" method="POST">
         {% csrf_token %}
+        <br>
+        <div class="row">
+            <div class="col-xl-10">
+                <b>Fecha de actualización:</b> {{ act}} <br>
+            </div>
+            <div class="col d-flex">
+                <button class="btn btn-warning ml-auto" type="submit" style="text-align: right;"><i class="fas fa-sync" id="espaciadoicon"></i> Actualizar</buttton>
+            </div>
+            
+        </div>
+            <br>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i> <b>PEDIDOS: </b>
@@ -25,7 +37,7 @@
                             <th id="centrar">Fecha</th>
                             <th id="centrar">Cliente</th>
                             <th id="centrar"># Pedido</th>
-                            <th id="centrar">Valor Pedido</th>
+                            <th id="centrar">Valor Total</th>
                             <th id="centrar">Estado Compra</th>
                             <th id="centrar">Estado Factura</th>
                             <th id="centrar">Acciones</th>
@@ -36,7 +48,7 @@
                             <th>Fecha</th>
                             <th>Cliente</th>
                             <th># Pedido</th>
-                            <th>Valor Pedido</th>
+                            <th>Valor Total</th>
                             <th>Estado Compra</th>
                             <th>Estado Factura</th>
                             <th>Acciones</th>
@@ -47,8 +59,8 @@
                         <tr>
                             <td> {{ pedido.fecha_pedido }} </td>
                             <td> {{ pedido.id_consumidor }} </td>
-                            <td> {{ pedido.num_pedido }}</td>
-                            <td> {{ pedido.valor_total }} </td>
+                            <td id="centrar"> {{ pedido.num_pedido }}</td>
+                            <td> $ {{ pedido.total_compra }} </td>
                             {% if pedido.estado_pedido == 'completed'%}
                             <td id="estado_completo"> Completado</td>
                             {% elif pedido.estado_pedido == 'on-hold' %}
@@ -77,7 +89,7 @@
                 </table>
             </div>
         </div>
-        <center><button class="btn btn-warning" type="submit"><i class="fas fa-sync" id="espaciadoicon"></i> Actualizar</buttton></center>
+        
     </form>
 </div>
 {% endblock %}

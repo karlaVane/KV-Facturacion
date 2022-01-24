@@ -1,23 +1,27 @@
-from Facturacion.models import Contribuyente, Detalle_pedido, Pedido, Consumidor,Actualizaciones, Valores
+from django.http import request
+from Facturacion.models import Contribuyente,Detalle_pedido, Pedido, Consumidor,Actualizaciones, Valores
 from woocommerce import API
-from datetime import datetime
+import time
+import locale
 
 class Woocommerce:
-    def __init__(self):
-        cred1,cred2 = self.obtener_credenciales()
+    def __init__(self,us_id):
+        self.us_id = us_id
+        cred1,cred2,url_t = self.obtener_credenciales(self.us_id)
         self.wcapi = API(
-            url="https://avelectronics.cc/", 
+            url=url_t, 
             consumer_key = cred1,
             consumer_secret = cred2,
             wp_api=True, 
             version="wc/v3" 
         )
         
-    def obtener_credenciales(self):
-        for datos in Contribuyente.objects.filter(correo= 'karla.vanessa@outlook.es'): #Recibir el correo de quien inicie sesion
+    def obtener_credenciales(self, us_id):
+        for datos in Contribuyente.objects.filter(usuario_id= us_id): #Recibir el correo de quien inicie sesion
             cred1=datos.consumer_key
             cred2=datos.consumer_secret
-        return cred1,cred2
+            url = datos.url_tienda
+        return cred1,cred2,url
 
     def get_pedidos(self, after):
         url = 'orders/?per_page=100&after={}'.format(after)
@@ -54,7 +58,8 @@ class Sincronizacion:
             telefono = tlf
         )
     ## --------------------------------------- Tabla Pedido ----------------------------------
-    def guardar_pedidos(self,pedido,cedula,fecha,estado,href,total,t_imp):
+    def guardar_pedidos(self,pedido,cedula,fecha,estado,href,total,t_imp, us_id):
+        total_compra = float(total) + float(t_imp)
         Pedido.objects.create(
             num_pedido = pedido,
             id_consumidor = Consumidor.objects.get(identificacion=cedula),
@@ -63,7 +68,9 @@ class Sincronizacion:
             href_pedido = href,
             ## pedido_completo = str(json_completo), agregar como parametro
             valor_total = float(total),
-            total_impuestos = float(t_imp)
+            total_impuestos = float(t_imp),
+            total_compra = total_compra,
+            id_contribuyente = Contribuyente.objects.get(usuario_id =us_id)
         )
     ## ---------------------------------- Tabla Detalle Pedido ----------------------------------
     def guardar_detalle_pedidos(self,id_pedido,nombre_prod,cant,unitario,subtotal,sub_impuestos):
@@ -78,24 +85,21 @@ class Sincronizacion:
     
     ## ---------------------------------- Tabla Actualizaciones ---------------------------------
     def guardar_fecha_actualizaciones (self):
+        locale.setlocale(locale.LC_ALL, 'es-ES')
         var = Pedido.objects.order_by('fecha_pedido').last() 
-        actual = datetime.now()
-        fecha = str(actual.year)+'-'+str(actual.month)+'-'+str(actual.day)
-        hora = str(actual.hour)+':'+str(actual.minute)+':'+str(actual.second)
-        fecha_actual=fecha+'T'+hora
+        ahora = time.strftime("%A %d de %B del %Y - %H:%M")
         Actualizaciones.objects.create(
-            fecha_actualizacion= fecha_actual,
+            fecha_actualizacion= ahora,
             ultima_fecha_pedido=var.fecha_pedido,
             ultimo_num_pedido = var.num_pedido
         )
 
     ## --------------------------------------- Todo ----------------------------------
-    def guardar_todo(self):
-        datos_json = Woocommerce()
+    def guardar_todo(self,us_id):
+        datos_json = Woocommerce(us_id)
         pedidos, cant = datos_json.get_nuevos_pedidos() 
         for pedido in pedidos: 
             cedula_consumidor = ''
-            print(pedido['billing']['address_2'])
             
             if (pedido['billing']['address_2']==''):
                 #cedula_consumidor = ''
@@ -109,13 +113,13 @@ class Sincronizacion:
                 cedula_consumidor = '9999999999'
 
             if (Consumidor.objects.filter(identificacion = cedula_consumidor).exists()): #Comprueba existencia del Consumidor
-                self.guardar_pedidos(pedido['id'],cedula_consumidor,pedido['date_created'],pedido['status'],pedido['_links']['self'][0]['href'],pedido['total'],pedido['total_tax'])
+                self.guardar_pedidos(pedido['id'],cedula_consumidor,pedido['date_created'],pedido['status'],pedido['_links']['self'][0]['href'],pedido['total'],pedido['total_tax'],us_id)
             else:
                 if (pedido['billing']['first_name']==''): ## Cuando es consumidor final
                     self.guardar_consumidor(cedula_consumidor,'CONSUMIDOR FINAL', '', '','')   
                 else: 
                     self.guardar_consumidor(cedula_consumidor,pedido['billing']['first_name']+' '+pedido['billing']['last_name'], pedido['billing']['email'],pedido['billing']['address_1'],pedido['billing']['phone'])
-                self.guardar_pedidos(pedido['id'],cedula_consumidor,pedido['date_created'],pedido['status'],pedido['_links']['self'][0]['href'],pedido['total'],pedido['total_tax'])
+                self.guardar_pedidos(pedido['id'],cedula_consumidor,pedido['date_created'],pedido['status'],pedido['_links']['self'][0]['href'],pedido['total'],pedido['total_tax'],us_id)
             
             detalle = pedido['line_items']
             for det in detalle:
@@ -134,14 +138,16 @@ class Sincronizacion:
 
 
 class Actualizacion_pedido:
+    
     def obtener_pedidos_noCompletado(self):
         pedidos_noC=[]
         for pedido in Pedido.objects.exclude(estado_pedido = 'completed').exclude(estado_pedido ='cancelled'): 
             pedidos_noC.append(pedido.num_pedido)
         return pedidos_noC
 
-    def modificar_estado_pedido(self,pedidos_noC):
-        wc= Woocommerce()
+    def modificar_estado_pedido(self,us_id,pedidos_noC):
+        wc= Woocommerce(us_id)
+        sincro = Sincronizacion()
         for pedido in pedidos_noC:
             print("---------------------------------"+pedido)
             datos_pedidos = wc.get_pedido(pedido)
@@ -155,5 +161,5 @@ class Actualizacion_pedido:
                 consulta.save()
             else:
                 print("Suerte - No ha cambiado nada")
-            
+        sincro.guardar_fecha_actualizaciones()
         return
