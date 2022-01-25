@@ -158,3 +158,19 @@
     color: #4F6066;
     margin-right: 20px;
 }
+
+#borde_div {
+    padding: 5px;
+    border: black 1px solid;
+}
+
+#borde_div1 {
+    margin-left: -12px;
+    padding: 5px;
+    border: black 1px solid;
+}
+
+#borde_form {
+    padding: 30px;
+    border: greenyellow 2px solid;
+}

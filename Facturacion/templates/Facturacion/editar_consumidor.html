@@ -1,0 +1,40 @@
+{% extends "Facturacion/base.html" %} {% load static %} {% load crispy_forms_tags %} {% block content %}
+
+<br>
+<div class="container">
+    <!-- MESSAGES   -->
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+    </div>
+    {% endfor %} {% endif %}
+    <!--- ---------- -->
+    <img class="mx-auto d-block" src="{% static 'images/usuario.png' %}" width="140" height="120">
+    <h4 class="text-center" id="datos"><i class="fas fa-edit" id="espaciadoicon"></i>Actualizar Consumidor</h4>
+    <hr>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-xl-6">
+                <center>
+                    <a href="{% url 'VistaPrevia' num %}" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
+                </center>
+            </div>
+            <div class="col-xl-6">
+                <center>
+                    <button type="submit" class="btn btn-info"> <i class="fas fa-save" id="espaciadoicon"></i>GUARDAR</button>
+                </center>
+            </div>
+        </div>
+        <br> {% csrf_token %} {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+            Datos actualizados
+        </div>
+        {% endif %}
+        <div id="borde_form">{{ form|crispy}}</div>
+
+</div>
+<br>
+
+</form>
+
+<br> {% endblock %}

@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
-from Facturacion.models import Pedido, Usuario,Tipo_comprobante
+from Facturacion.models import Pedido, Usuario,Contribuyente, Actualizaciones,Consumidor,Detalle_pedido
 from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from Facturacion.Core import Actualizacion_pedido, Woocommerce, Sincronizacion,Contribuyente, Actualizaciones
+from Facturacion.Core import Actualizacion_pedido, Woocommerce, Sincronizacion
+from datetime import datetime
+from Facturacion.forms import FormularioConsumidor
 
 # Create your views here.
 
@@ -41,8 +43,15 @@ def Mis_facturas(request):
     return render(request,'Facturacion/mis_facturas.html',{'pedidos': pedidos, 'act':act.fecha_actualizacion})
 
 @login_required
-def vista_prev_fact(request):
-    return render(request,'Facturacion/vista_previa.html')
+def vista_prev_fact(request,num_pedido):
+    fecha_emision = datetime.today().strftime('%d.%m.%Y')
+    us= request.user.id
+    emisor = Contribuyente.objects.get(usuario_id = us)
+    pedido = Pedido.objects.get(num_pedido = num_pedido)
+    consumidor = Consumidor.objects.get(identificacion = pedido.id_consumidor_id)
+    detalle_pedido = Detalle_pedido.objects.filter(id_pedido_id = num_pedido)
+    return render(request,'Facturacion/vista_previa.html',
+    {"num_pedido":num_pedido, "emisor": emisor, "fecha": fecha_emision, "consumidor":consumidor, "detalle":detalle_pedido})
 
 @login_required
 def reporte_general(request):
@@ -54,3 +63,16 @@ def mis_datos(request):
     a = Contribuyente.objects.get(usuario_id = us)
     datos2 = Usuario.objects.get(id= us)
     return render(request,'Facturacion/mis_datos.html',{'datos': a, 'datos2': datos2})
+
+def editar_consumidor(request, identificacion,num_pedido):
+    consumidor = Consumidor.objects.filter(identificacion= identificacion).first()
+    form = FormularioConsumidor(instance=consumidor)
+    if request.method == 'POST':
+        print("ENTROOOOOO")
+        print(num_pedido)
+        consumidor = Consumidor.objects.get(identificacion= identificacion)
+        form = FormularioConsumidor(request.POST, instance=consumidor)
+        if form.is_valid():
+            form.save()
+        messages.success(request,"Cambios guardados exitosamente")
+    return render(request, 'Facturacion/editar_consumidor.html',{"form": form, "consumidor":consumidor, "num":num_pedido})
