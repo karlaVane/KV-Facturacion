@@ -174,3 +174,12 @@
     padding: 30px;
     border: greenyellow 2px solid;
 }
+
+#valores {
+    text-align: right;
+    width: 200px;
+}
+
+#tablaFactura {
+    font-size: small;
+}

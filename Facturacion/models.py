@@ -13,10 +13,11 @@ class Contribuyente(models.Model):
     usuario = models.OneToOneField(Usuario,on_delete=models.CASCADE)
     RUC = models.CharField(primary_key=True,max_length=15)
     razon_social = models.CharField(max_length=40, verbose_name="Razón social")
+    nombre_comercial = models.CharField(max_length=300, verbose_name="Nombre Comercial", blank=True)
     url_tienda = models.CharField(max_length=300, verbose_name="URL Tienda")
     consumer_key = models.CharField(max_length=100)
     consumer_secret = models.CharField(max_length=100)
-    direccion = models.CharField(max_length=50,verbose_name="Dirección")
+    direccion = models.CharField(max_length=900,verbose_name="Dirección")
     contabilidad = models.BooleanField()
     telefono = models.CharField(max_length=10,verbose_name="Teléfono")
     firma_electronica = models.FileField()
@@ -72,9 +73,11 @@ class Pedido (models.Model):
     valor_transporte = models.DecimalField(max_digits=9, decimal_places=4,default=0)
     total_compra = models.DecimalField(max_digits=9, decimal_places=4,default=0)
     id_contribuyente = models.ForeignKey(Contribuyente,on_delete=models.CASCADE,null=True)
+    esta_facturado= models.BooleanField(default=False)
 
 class Detalle_pedido(models.Model):
     id_pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE,null=False)
+    sku = models.CharField(max_length=10)
     nombre_prod = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     valor_unitario = models.DecimalField(max_digits=9,decimal_places=4, default=0)
@@ -84,16 +87,14 @@ class Detalle_pedido(models.Model):
 class Documento(models.Model):
     num_comprobante = models.CharField(primary_key=True,max_length=9)
     id_pedido = models.OneToOneField(Pedido,on_delete=models.CASCADE) ###
-    #id_pedido =models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)
-    tipo_comprobante = models.ForeignKey(Tipo_comprobante,on_delete=models.CASCADE, null=True)
-    id_usuario = models.ForeignKey(Contribuyente,on_delete=models.CASCADE, null=True)
     tipo_ambiente = models.CharField(max_length=2)
-    clave_acceso = models.CharField(max_length=49)
-    serie = models.CharField(max_length=6)
-    digito_verificador = models.CharField(max_length=1)
     tipo_emision = models.IntegerField(default=1) #Emisión normal
+    id_usuario = models.ForeignKey(Contribuyente,on_delete=models.CASCADE, null=True)
+    clave_acceso = models.CharField(max_length=49)
+    tipo_comprobante = models.ForeignKey(Tipo_comprobante,on_delete=models.CASCADE, null=True)
+    serie = models.CharField(max_length=6) #establecimiento + punto emision
     fecha_emision = models.DateTimeField(auto_now_add=True)
-    num_gr = models.CharField(max_length=30)
+    #num_gr = models.CharField(max_length=30) NO APLICA
     documento = models.FileField()
 
 class Valores(models.Model): 

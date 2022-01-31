@@ -73,9 +73,10 @@ class Sincronizacion:
             id_contribuyente = Contribuyente.objects.get(usuario_id =us_id)
         )
     ## ---------------------------------- Tabla Detalle Pedido ----------------------------------
-    def guardar_detalle_pedidos(self,id_pedido,nombre_prod,cant,unitario,subtotal,sub_impuestos):
+    def guardar_detalle_pedidos(self,id_pedido,sku,nombre_prod,cant,unitario,subtotal,sub_impuestos):
         Detalle_pedido.objects.create(
             id_pedido=Pedido.objects.get(num_pedido=id_pedido),
+            sku = sku,
             nombre_prod=nombre_prod,
             cantidad = cant,
             valor_unitario = unitario,
@@ -110,7 +111,7 @@ class Sincronizacion:
             else:
                 cedula_consumidor = pedido['billing']['address_2'] 
             if(pedido['billing']['first_name'] == ''):
-                cedula_consumidor = '9999999999'
+                cedula_consumidor = '9999999999999'
 
             if (Consumidor.objects.filter(identificacion = cedula_consumidor).exists()): #Comprueba existencia del Consumidor
                 self.guardar_pedidos(pedido['id'],cedula_consumidor,pedido['date_created'],pedido['status'],pedido['_links']['self'][0]['href'],pedido['total'],pedido['total_tax'],us_id)
@@ -126,12 +127,13 @@ class Sincronizacion:
                 nombre_prod = det['name']
                 cantidad = det['quantity']
                 valor_unitario = det['price']
-                subtotal = det['subtotal']
+                subtotal = det['total']
+                sku = det['sku']
                 if (det['total_tax']=="0.00"):
                     subtotal_impuestos = 0
                 else:
                     subtotal_impuestos = det['taxes'][0]['total']
-                self.guardar_detalle_pedidos(pedido['id'],nombre_prod,cantidad,valor_unitario,subtotal,subtotal_impuestos)
+                self.guardar_detalle_pedidos(pedido['id'],sku,nombre_prod,cantidad,valor_unitario,subtotal,subtotal_impuestos)
         
         # Tabla actualizaciones
         self.guardar_fecha_actualizaciones()

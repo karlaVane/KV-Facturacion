@@ -27,34 +27,32 @@
             </div>
         </div>
         <div class="col-xl-6" id="borde_div">
-            <table>
+            <table id="tablaFactura">
                 <tr>
                     <td><b>R.U.C</b></td>
                     <td> {{emisor.RUC}}</td>
                 </tr>
                 <tr>
                     <td><b>FACTURA No</b></td>
-                    <td></td>
+                    <td>{{comprobante}}</td>
                 </tr>
                 <tr>
                     <td><b>NÚMERO DE AUTORIZACIÓN</b></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td><b>FECHA Y HORA DE AUTORIZACIÓN</b></td>
-                    <td></td>
-                </tr>
+
                 <tr>
                     <td><b>AMBIENTE</b></td>
-                    <td></td>
+                    {% if ambiente == 1 %}
+                    <td>PRUEBAS</td>
+                    {% elif ambiente == 2 %}
+                    <td>PRODUCCION</td>
+                    {% endif %}
                 </tr>
-                <tr>
-                    <td><b>EMISIÓN</b></td>
-                    <td></td>
-                </tr>
+
                 <tr>
                     <td><b>CLAVE DE ACCESO </b></td>
-                    <td></td>
+                    <td>{{clave}}</td>
                 </tr>
             </table>
         </div>
@@ -106,7 +104,6 @@
                     <th scope="col">Cod Principal</th>
                     <th scope="col">Cant</th>
                     <th scope="col">Descripcion</th>
-                    <th scope="col">% Descuento</th>
                     <th scope="col">Precio Unitario</th>
                     <th scope="col">Descuento</th>
                     <th scope="col">Precio total</th>
@@ -115,13 +112,12 @@
             <tbody>
                 {% for det in detalle %}
                 <tr>
-                    <td> {{ num_pedido }} </td>
+                    <td> {{ det.sku }} </td>
                     <td> {{ det.cantidad }} </td>
                     <td> {{ det.nombre_prod}} </td>
-                    <td> 0.00 </td>
                     <td>{{ det.valor_unitario }}</td>
                     <td> 0.00 </td>
-                    <td> {{ det.valor_unitario }} </td>
+                    <td> {{ det.subtotal }} </td>
                 </tr>
                 {% endfor %}
 
@@ -134,45 +130,52 @@
             <label class="text-center"><b>Información Adicional</b></label>
         </div>
         <div class="col-xl-5" id="borde_div">
+
             <table>
+                {% if pedido.total_impuestos != 0.0000 %}
                 <tr>
                     <td><b>Subtotal 12%</b></td>
-                    <td></td>
+                    <td id="valores">${{sum}}</td>
                 </tr>
                 <tr>
-                    <td><b>Subtotal 0%</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><b>Subtotal No sujeto a IVA</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><b>Subtotal sin impuesto</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><b>ICE</b></td>
-                    <td></td>
+                    <td><b>Subtotal sin impuestos</b></td>
+                    <td id="valores">${{sum}}</td>
                 </tr>
                 <tr>
                     <td><b>IVA 12.00%</b></td>
-                    <td></td>
+                    <td id="valores">${{pedido.total_impuestos}}</td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td><b>Subtotal IVA 0%</b></td>
+                    <td id="valores">${{pedido.valor_total}}</td>
                 </tr>
                 <tr>
+                    <td><b>Subtotal sin impuesto</b></td>
+                    <td id="valores">${{pedido.valor_total}}</td>
+                </tr>
+                {% endif %}
+                <tr>
                     <td><b>VALOR TOTAL</b></td>
-                    <td></td>
+                    <td id="valores">${{ pedido.valor_total }}</td>
                 </tr>
                 <tr>
                     <td><b>VALOR A PAGAR</b></td>
-                    <td></td>
+                    <td id="valores">${{ pedido.valor_total }}</td>
                 </tr>
             </table>
         </div>
     </div>
     <br>
     <center>
-        <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
+        <form method="POST">
+            <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
+            <!-- AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO -->
+
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary"> <i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
+        </form>
     </center>
 </div>
 <br><br> {% endblock %}
