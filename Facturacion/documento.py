@@ -2,82 +2,106 @@ import xml.etree.cElementTree as ET
 import random 
 
 class DocumentoXML:
-    def generar_XML(self,ambiente,emision,razonSocial,nombreComercial,ruc,clave,codDoc,estab,ptoEmi,secuencial,dirMatriz):
+    def generar_XML(self,ambiente,emision,clave,codDoc,estab,ptoEmi,secuencial,
+    fecha, emisor, consumidor, pedido,detalle_pedido):
         factura = ET.Element("factura", id="comprobante", version="1.0.0")
         ## Información tributaria
         infoTributaria = ET.SubElement(factura, "infoTributaria")
         ET.SubElement(infoTributaria, "ambiente").text = ambiente
         ET.SubElement(infoTributaria, "tipoEmision").text = emision
-        ET.SubElement(infoTributaria, "razonSocial").text = razonSocial
-        ET.SubElement(infoTributaria, "nombreComercial").text = nombreComercial
-        ET.SubElement(infoTributaria, "ruc").text = ruc
+        ET.SubElement(infoTributaria, "razonSocial").text = emisor.razon_social
+        if emisor.nombre_comercial != '':
+            ET.SubElement(infoTributaria, "nombreComercial").text = emisor.nombre_comercial
+        ET.SubElement(infoTributaria, "ruc").text = emisor.RUC
         ET.SubElement(infoTributaria, "claveAcceso").text = clave
         ET.SubElement(infoTributaria, "codDoc").text = codDoc
         ET.SubElement(infoTributaria, "estab").text = estab
         ET.SubElement(infoTributaria, "ptoEmi").text = ptoEmi
         ET.SubElement(infoTributaria, "secuencial").text = secuencial
-        ET.SubElement(infoTributaria, "dirMatriz").text = dirMatriz
+        ET.SubElement(infoTributaria, "dirMatriz").text = emisor.direccion
 
         ## Información factura
         infoFactura = ET.SubElement(factura, "infoFactura")
-        ET.SubElement(infoFactura, "fechaEmision").text = "fecha"
-        ET.SubElement(infoFactura, "dirEstablecimiento").text = "dirEstablecimiento"
-        ET.SubElement(infoFactura, "obligadoContabilidad").text = "obligadoContabilidad"
-        ET.SubElement(infoFactura, "tipoIdentificacionComprador").text = "tipoIdentificacionComprador"
-        ET.SubElement(infoFactura, "razonSocialComprador").text = "razonSocialComprador"
-        ET.SubElement(infoFactura, "identificacionComprador").text = "identificacionComprador"
-        ET.SubElement(infoFactura, "direccionComprador").text = "direccionComprador"
-        ET.SubElement(infoFactura, "totalSinImpuestos").text = "totalSinImpuestos"
-        ET.SubElement(infoFactura, "totalDescuento").text = "totalDescuento"
+        ET.SubElement(infoFactura, "fechaEmision").text = fecha
+        #ET.SubElement(infoFactura, "dirEstablecimiento").text = "dirEstablecimiento"
+        if emisor.contabilidad:
+            ET.SubElement(infoFactura, "obligadoContabilidad").text = "SI"
+        else:
+            ET.SubElement(infoFactura, "obligadoContabilidad").text = "NO"
+        if consumidor.identificacion == '9999999999999':
+            ET.SubElement(infoFactura, "tipoIdentificacionComprador").text = "07"
+        else:
+            if len(consumidor.identificacion)==10:
+                ET.SubElement(infoFactura, "tipoIdentificacionComprador").text = "05"
+            elif len(consumidor.identificacion)==13:
+                ET.SubElement(infoFactura, "tipoIdentificacionComprador").text = "04"
+
+        ET.SubElement(infoFactura, "razonSocialComprador").text = consumidor.nombre
+        ET.SubElement(infoFactura, "identificacionComprador").text = consumidor.identificacion
+        ET.SubElement(infoFactura, "direccionComprador").text = consumidor.direccion
+        ET.SubElement(infoFactura, "totalSinImpuestos").text = str(round(float(pedido.valor_total)-float(pedido.total_impuestos),2))
+        ET.SubElement(infoFactura, "totalDescuento").text = "0.00"
         
         ####  Total con Impuestos
         ###### Total impuesto
         totalConImpuestos = ET.SubElement(infoFactura, "totalConImpuestos")
         totalImpuesto = ET.SubElement(totalConImpuestos, "totalImpuesto")
         ######
-        ET.SubElement(totalImpuesto, "codigo").text = "codigo"
-        ET.SubElement(totalImpuesto, "codigoPorcentaje").text = "codigoPorcentaje"
-        ET.SubElement(totalImpuesto, "baseImponible").text = "baseImponible"
-        ET.SubElement(totalImpuesto, "valor").text = "valor"
+        ET.SubElement(totalImpuesto, "codigo").text = "2"
+        if pedido.total_impuestos != 0.0000:
+            ET.SubElement(totalImpuesto, "codigoPorcentaje").text ="2"
+        else:
+            ET.SubElement(totalImpuesto, "codigoPorcentaje").text ="0"
+
+        ET.SubElement(totalImpuesto, "descuentoAdicional").text = "0.00"
+        ET.SubElement(totalImpuesto, "baseImponible").text = str(round(float(pedido.valor_total)-float(pedido.total_impuestos),2))
+        ET.SubElement(totalImpuesto, "valor").text = str(round(float(pedido.total_impuestos),2))
         ## Información factura
-        ET.SubElement(infoFactura, "propina").text = "propina"
-        ET.SubElement(infoFactura, "importeTotal").text = "importeTotal"
-        ET.SubElement(infoFactura, "moneda").text = "moneda"
+        ET.SubElement(infoFactura, "propina").text = "0.00"
+        ET.SubElement(infoFactura, "importeTotal").text = str(round(pedido.valor_total,2))
+        ET.SubElement(infoFactura, "moneda").text = "DOLAR"
         
         pagos = ET.SubElement(infoFactura, "pagos")
         pago = ET.SubElement(pagos, "pago")
-        ET.SubElement(pago, "formaPago").text = "formapago"
-        ET.SubElement(pago, "total").text = "total"
-        ET.SubElement(pago, "plazo").text = "plazo" #Cuando corresponda
-        ET.SubElement(pago, "unidadTiempo").text = "dias" #cuando corresponda
+        ET.SubElement(pago, "formaPago").text = "20"
+        ET.SubElement(pago, "total").text = str(round(pedido.valor_total,2))
+        #ET.SubElement(pago, "plazo").text = "plazo" #Cuando corresponda
+        #ET.SubElement(pago, "unidadTiempo").text = "dias" #cuando corresponda
 
         ## Detalles
         #### Detalle
         detalles = ET.SubElement(factura, "detalles")
-        detalle = ET.SubElement(detalles,"detalle")
-        ET.SubElement(detalle, "codigoPrincipal").text = "codigoPrincipal"
-        ET.SubElement(detalle, "descripcion").text = "descripcion"
-        ET.SubElement(detalle, "cantidad").text = "cantidad"
-        ET.SubElement(detalle, "precioUnitario").text = "precioUnitario"
-        ET.SubElement(detalle, "descuento").text = "descuento"
-        ET.SubElement(detalle, "precioTotalSinImpuesto").text = "precioTotalSinImpuesto"
+        for det in detalle_pedido:
 
-        impuestos = ET.SubElement(detalle,"impuestos")
-        impuesto = ET.SubElement(impuestos,"impuesto")
-        ET.SubElement(impuesto, "codigo").text = "codigo"
-        ET.SubElement(impuesto, "codigoPorcentaje").text = "codigoPorcentaje"
-        ET.SubElement(impuesto, "tarifa").text = "tarifa"
-        ET.SubElement(impuesto, "baseImponible").text = "baseImponible"
-        ET.SubElement(impuesto, "valor").text = "valor"
+            detalle = ET.SubElement(detalles,"detalle")
+            ET.SubElement(detalle, "codigoPrincipal").text = det.sku
+            ET.SubElement(detalle, "descripcion").text = det.nombre_prod
+            ET.SubElement(detalle, "cantidad").text = str(det.cantidad)
+            ET.SubElement(detalle, "precioUnitario").text = str(round(det.valor_unitario,2))
+            ET.SubElement(detalle, "descuento").text = "0.00"
+            ET.SubElement(detalle, "precioTotalSinImpuesto").text = str(round(det.subtotal,2))
+
+            impuestos = ET.SubElement(detalle,"impuestos")
+            impuesto = ET.SubElement(impuestos,"impuesto")
+            ET.SubElement(impuesto, "codigo").text = "2"
+
+            if det.subtotal_impuestos != 0.0000:
+                ET.SubElement(impuesto, "codigoPorcentaje").text = "2"
+                ET.SubElement(impuesto, "tarifa").text = "12"
+            else:    
+                ET.SubElement(impuesto, "codigoPorcentaje").text = "0"
+                ET.SubElement(impuesto, "tarifa").text = "0"
+            
+            ET.SubElement(impuesto, "baseImponible").text = str(round(det.subtotal,2))
+            ET.SubElement(impuesto, "valor").text = str(round(det.subtotal_impuestos,2))
 
         ## Campos adicionales
-        campoAdicional= ET.SubElement(factura, "campoAdicional", nombre="riempe").text = "Popular o Emprendedor"
-        
-        
+        #campoAdicional= ET.SubElement(factura, "campoAdicional", nombre="riempe").text = "Popular o Emprendedor"
+
         #arbol = ET.ElementTree(comienzo)
         arbol = ET.ElementTree(factura)
         #ET.ElementTree.parse(arbol,source="Facturacion/XMLs/prueba.xml")
-        arbol.write("Facturacion/XMLs/prueba.xml",encoding="UTF-8",xml_declaration=True)
+        arbol.write("Facturacion/XMLs/"+consumidor.identificacion+".xml",encoding="UTF-8",xml_declaration=True)
         
         
         

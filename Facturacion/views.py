@@ -61,6 +61,7 @@ def vista_prev_fact(request,num_pedido):
     pedido = Pedido.objects.get(num_pedido = num_pedido)
     consumidor = Consumidor.objects.get(identificacion = pedido.id_consumidor_id)
     detalle_pedido = Detalle_pedido.objects.filter(id_pedido_id = num_pedido)
+    
     ##
     doc = DocumentoXML()
     establecimiento = Establecimiento.objects.get(id_usuario_id = emisor.RUC) 
@@ -85,9 +86,8 @@ def vista_prev_fact(request,num_pedido):
         sum+= det.subtotal 
     if request.method == 'POST':
         consumidor = Consumidor.objects.get(identificacion= pedido.id_consumidor_id)
-        doc.generar_XML(str(ambiente),tipo_emision,emisor.razon_social,emisor.nombre_comercial,emisor.RUC,
-        clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),str(num_emision.num_punto_emision),
-        num_comprobante,emisor.direccion)
+        doc.generar_XML(str(ambiente),tipo_emision, clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),
+        str(num_emision.num_punto_emision),num_comprobante, fecha2,emisor,consumidor,pedido,detalle_pedido)
         print("hay q facturar")
         print(consumidor.identificacion)
         print(num_pedido)
