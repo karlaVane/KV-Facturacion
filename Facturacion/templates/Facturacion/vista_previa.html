@@ -169,13 +169,39 @@
     </div>
     <br>
     <center>
-        <form method="POST">
-            <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
-            <!-- AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO -->
 
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary"> <i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
-        </form>
+        <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
+        <!--AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO-->
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalFirma"><i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
     </center>
+
+
+
+    <!--MODAL -->
+    <div class="modal fade" id="modalFirma" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModal">Ingresar contraseña firma</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+                        <input type="password" class="form-control" name="firma" placeholder="Contraseña firma electrónica" required>
+                    </div>
+
+                    {% csrf_token %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-window-close" id="espaciadoicon"></i>Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-check-circle" id="espaciadoicon"></i>Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <br><br> {% endblock %}

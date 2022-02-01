@@ -15,7 +15,7 @@ from Facturacion.documento import DocumentoXML
 def login(request):
     return render(request,'Facturacion/login.html')
 
-    
+
 @login_required
 def Mis_facturas(request):
     us= request.user.id #obtengo el id de quien inició sesión
@@ -85,12 +85,14 @@ def vista_prev_fact(request,num_pedido):
     for det in detalle_pedido:
         sum+= det.subtotal 
     if request.method == 'POST':
-        consumidor = Consumidor.objects.get(identificacion= pedido.id_consumidor_id)
-        doc.generar_XML(str(ambiente),tipo_emision, clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),
-        str(num_emision.num_punto_emision),num_comprobante, fecha2,emisor,consumidor,pedido,detalle_pedido)
+        #consumidor = Consumidor.objects.get(identificacion= pedido.id_consumidor_id)
+        #doc.generar_XML(str(ambiente),tipo_emision, clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),
+        #str(num_emision.num_punto_emision),num_comprobante, fecha2,emisor,consumidor,pedido,detalle_pedido)
         print("hay q facturar")
-        print(consumidor.identificacion)
-        print(num_pedido)
+        #print(consumidor.identificacion)
+        #print(num_pedido)
+        a=request.POST['firma']
+        print(a)
     
     return render(request,'Facturacion/vista_previa.html',
     {"num_pedido":num_pedido, "emisor": emisor, "fecha": fecha_emision,

@@ -1,5 +1,6 @@
 import xml.etree.cElementTree as ET 
 import random 
+import subprocess
 
 class DocumentoXML:
     def generar_XML(self,ambiente,emision,clave,codDoc,estab,ptoEmi,secuencial,
@@ -128,3 +129,19 @@ class DocumentoXML:
         elif digito == 10:
             digito = 1
         return str(digito) #devuelve en int
+
+    def subproceso(self,contra):        
+        #return subprocess.check_output('java -jar C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\privada\\firmador.jar C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\privada\\FIRMA.p12 KVmr210897 C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\XMLs\\1753244324.xml C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\XMLs 1753244324F.xml',shell=True)
+        a = subprocess.check_output('java -jar '+ r'.\Facturacion\privada\firmador.jar '+ 
+        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\privada\FIRMA.p12 '+
+        contra+' '+
+        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\XMLs\1753244324.xml '+
+        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\XMLs 1753244324F.xml',shell=True)
+        
+        if (int(a) == 0):
+            print("Contraseña incorrecta")
+        else:
+            print("documento generado")
+        
+        
+        
