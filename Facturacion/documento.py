@@ -98,11 +98,9 @@ class DocumentoXML:
 
         ## Campos adicionales
         #campoAdicional= ET.SubElement(factura, "campoAdicional", nombre="riempe").text = "Popular o Emprendedor"
-
-        #arbol = ET.ElementTree(comienzo)
+        print (factura)
         arbol = ET.ElementTree(factura)
-        #ET.ElementTree.parse(arbol,source="Facturacion/XMLs/prueba.xml")
-        arbol.write("Facturacion/XMLs/"+consumidor.identificacion+".xml",encoding="UTF-8",xml_declaration=True)
+        arbol.write("Facturacion/XMLs/"+pedido.num_pedido+".xml",encoding="UTF-8",xml_declaration=True)
         
         
         
@@ -130,18 +128,15 @@ class DocumentoXML:
             digito = 1
         return str(digito) #devuelve en int
 
-    def subproceso(self,contra):        
+    def subproceso(self,contra,num_pedido):        
         #return subprocess.check_output('java -jar C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\privada\\firmador.jar C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\privada\\FIRMA.p12 KVmr210897 C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\XMLs\\1753244324.xml C:\\Users\\HP\\Documents\\Karla\\01.TESIS\\KV-Facturacion\\KVFacturacion\\Facturacion\\XMLs 1753244324F.xml',shell=True)
         a = subprocess.check_output('java -jar '+ r'.\Facturacion\privada\firmador.jar '+ 
-        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\privada\FIRMA.p12 '+
+        r'.\Facturacion\privada\FIRMA.p12 '+
         contra+' '+
-        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\XMLs\1753244324.xml '+
-        r'C:\Users\HP\Documents\Karla\01.TESIS\KV-Facturacion\KVFacturacion\Facturacion\XMLs 1753244324F.xml',shell=True)
+        '.\\Facturacion\\XMLs\\'+str(num_pedido)+".xml "+
+        r'.\Facturacion\XMLs ' +
+        str(num_pedido)+'.xml',shell=True)
         
-        if (int(a) == 0):
-            print("Contraseña incorrecta")
-        else:
-            print("documento generado")
-        
+        return a
         
         

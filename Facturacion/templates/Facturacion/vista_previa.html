@@ -1,207 +1,219 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
 <br>
 <h3 class="text-center" id="datos"><b>Vista Previa Pedido:</b> {{ num_pedido }}</h3>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col-xl-6">
-            <img src="{% static 'images/logo.png' %}" width="180" height="80">
-            <h4>KV - Facturación</h4>
-            <br><br>
-            <div id="borde_div1">
-                <h5>{{emisor.razon_social}}</h5>
-                <table>
+<!-- MENSAJES -->
+{% if messages %} {% for message in messages %} {% if message.tags == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% endif %} {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    {% endfor %} {% endif %}
+    <!---->
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6">
+                <img src="{% static 'images/logo.png' %}" width="180" height="80">
+                <h4>KV - Facturación</h4>
+                <br><br>
+                <div id="borde_div1">
+                    <h5>{{emisor.razon_social}}</h5>
+                    <table>
+                        <tr>
+                            <td><b>Dirección: </b></td>
+                            <td>{{emisor.direccion}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Obligado llevar contabilidad: </b></td>
+                            {% if emisor.contabilidad == 'true' %}
+                            <td> SÍ</td>
+                            {% else %}
+                            <td> NO</td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-6" id="borde_div">
+                <table id="tablaFactura">
                     <tr>
-                        <td><b>Dirección: </b></td>
-                        <td>{{emisor.direccion}}</td>
+                        <td><b>R.U.C</b></td>
+                        <td> {{emisor.RUC}}</td>
                     </tr>
                     <tr>
-                        <td><b>Obligado llevar contabilidad: </b></td>
-                        {% if emisor.contabilidad == 'true' %}
-                        <td> SÍ</td>
-                        {% else %}
-                        <td> NO</td>
+                        <td><b>FACTURA No</b></td>
+                        <td>{{comprobante}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>NÚMERO DE AUTORIZACIÓN</b></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>AMBIENTE</b></td>
+                        {% if ambiente == 1 %}
+                        <td>PRUEBAS</td>
+                        {% elif ambiente == 2 %}
+                        <td>PRODUCCION</td>
                         {% endif %}
+                    </tr>
+
+                    <tr>
+                        <td><b>CLAVE DE ACCESO </b></td>
+                        <td>{{clave}}</td>
                     </tr>
                 </table>
             </div>
         </div>
-        <div class="col-xl-6" id="borde_div">
-            <table id="tablaFactura">
-                <tr>
-                    <td><b>R.U.C</b></td>
-                    <td> {{emisor.RUC}}</td>
-                </tr>
-                <tr>
-                    <td><b>FACTURA No</b></td>
-                    <td>{{comprobante}}</td>
-                </tr>
-                <tr>
-                    <td><b>NÚMERO DE AUTORIZACIÓN</b></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td><b>AMBIENTE</b></td>
-                    {% if ambiente == 1 %}
-                    <td>PRUEBAS</td>
-                    {% elif ambiente == 2 %}
-                    <td>PRODUCCION</td>
-                    {% endif %}
-                </tr>
-
-                <tr>
-                    <td><b>CLAVE DE ACCESO </b></td>
-                    <td>{{clave}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br>
-    <div class="row" id="borde_div">
-        <div class="col-xl-8">
-            <table>
-                <tr>
-                    <td><b>Fecha de Emisión: </b></td>
-                    <td>{{ fecha }}</td>
-                </tr>
-                <tr>
-                    <td><b>Razón social/ Nombres y Apellidos: </b></td>
-                    <td>{{ consumidor.nombre }}</td>
-                </tr>
-                <tr>
-                    <td><b>Correo electrónico: </b></td>
-                    <td>{{ consumidor.correo }}</td>
-                </tr>
-                <tr>
-                    <td><b>Dirección: </b></td>
-                    <td>{{ consumidor.direccion }}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-xl-4">
-            <table>
-                <tr>
-                    <td><b>RUC/CI: </b></td>
-                    <td>{{ consumidor.identificacion }}</td>
-                </tr>
-                <tr>
-                    <td><b>Teléfono: </b></td>
-                    <td>{{ consumidor.telefono}}</td>
-                </tr>
-            </table>
-            <br>
-            <center>
-                <a href="{% url 'Editar' consumidor.identificacion num_pedido%}" class="btn btn-info"> <i class="fas fa-edit" id="espaciadoicon"></i>EDITAR</a>
-            </center>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Cod Principal</th>
-                    <th scope="col">Cant</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Descuento</th>
-                    <th scope="col">Precio total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for det in detalle %}
-                <tr>
-                    <td> {{ det.sku }} </td>
-                    <td> {{ det.cantidad }} </td>
-                    <td> {{ det.nombre_prod}} </td>
-                    <td>{{ det.valor_unitario }}</td>
-                    <td> 0.00 </td>
-                    <td> {{ det.subtotal }} </td>
-                </tr>
-                {% endfor %}
-
-            </tbody>
-        </table>
-    </div>
-    <br><br><br><br>
-    <div class="row">
-        <div class="col-xl-7" id="borde_div">
-            <label class="text-center"><b>Información Adicional</b></label>
-        </div>
-        <div class="col-xl-5" id="borde_div">
-
-            <table>
-                {% if pedido.total_impuestos != 0.0000 %}
-                <tr>
-                    <td><b>Subtotal 12%</b></td>
-                    <td id="valores">${{sum}}</td>
-                </tr>
-                <tr>
-                    <td><b>Subtotal sin impuestos</b></td>
-                    <td id="valores">${{sum}}</td>
-                </tr>
-                <tr>
-                    <td><b>IVA 12.00%</b></td>
-                    <td id="valores">${{pedido.total_impuestos}}</td>
-                </tr>
-
-                {% else %}
-                <tr>
-                    <td><b>Subtotal IVA 0%</b></td>
-                    <td id="valores">${{pedido.valor_total}}</td>
-                </tr>
-                <tr>
-                    <td><b>Subtotal sin impuesto</b></td>
-                    <td id="valores">${{pedido.valor_total}}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <td><b>VALOR TOTAL</b></td>
-                    <td id="valores">${{ pedido.valor_total }}</td>
-                </tr>
-                <tr>
-                    <td><b>VALOR A PAGAR</b></td>
-                    <td id="valores">${{ pedido.valor_total }}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br>
-    <center>
-
-        <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
-        <!--AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO-->
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalFirma"><i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
-    </center>
-
-
-
-    <!--MODAL -->
-    <div class="modal fade" id="modalFirma" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModal">Ingresar contraseña firma</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                </div>
-                <form method="POST">
-                    <div class="modal-body">
-                        <input type="password" class="form-control" name="firma" placeholder="Contraseña firma electrónica" required>
-                    </div>
-
-                    {% csrf_token %}
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-window-close" id="espaciadoicon"></i>Cancelar</button>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-check-circle" id="espaciadoicon"></i>Aceptar</button>
-                    </div>
-                </form>
+        <br>
+        <div class="row" id="borde_div">
+            <div class="col-xl-8">
+                <table>
+                    <tr>
+                        <td><b>Fecha de Emisión: </b></td>
+                        <td>{{ fecha }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Razón social/ Nombres y Apellidos: </b></td>
+                        <td>{{ consumidor.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Correo electrónico: </b></td>
+                        <td>{{ consumidor.correo }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Dirección: </b></td>
+                        <td>{{ consumidor.direccion }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-xl-4">
+                <table>
+                    <tr>
+                        <td><b>RUC/CI: </b></td>
+                        <td>{{ consumidor.identificacion }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Teléfono: </b></td>
+                        <td>{{ consumidor.telefono}}</td>
+                    </tr>
+                </table>
+                <br>
+                <center>
+                    <a href="{% url 'Editar' consumidor.identificacion num_pedido%}" class="btn btn-info"> <i class="fas fa-edit" id="espaciadoicon"></i>EDITAR</a>
+                </center>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod Principal</th>
+                        <th scope="col">Cant</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Precio Unitario</th>
+                        <th scope="col">Descuento</th>
+                        <th scope="col">Precio total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for det in detalle %}
+                    <tr>
+                        <td> {{ det.sku }} </td>
+                        <td> {{ det.cantidad }} </td>
+                        <td> {{ det.nombre_prod}} </td>
+                        <td>{{ det.valor_unitario }}</td>
+                        <td> 0.00 </td>
+                        <td> {{ det.subtotal }} </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <br><br><br><br>
+        <div class="row">
+            <div class="col-xl-7" id="borde_div">
+                <label class="text-center"><b>Información Adicional</b></label>
+            </div>
+            <div class="col-xl-5" id="borde_div">
+
+                <table>
+                    {% if pedido.total_impuestos != 0.0000 %}
+                    <tr>
+                        <td><b>Subtotal 12%</b></td>
+                        <td id="valores">${{sum}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subtotal sin impuestos</b></td>
+                        <td id="valores">${{sum}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>IVA 12.00%</b></td>
+                        <td id="valores">${{pedido.total_impuestos}}</td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td><b>Subtotal IVA 0%</b></td>
+                        <td id="valores">${{pedido.valor_total}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subtotal sin impuesto</b></td>
+                        <td id="valores">${{pedido.valor_total}}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td><b>VALOR TOTAL</b></td>
+                        <td id="valores">${{ pedido.valor_total }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>VALOR A PAGAR</b></td>
+                        <td id="valores">${{ pedido.valor_total }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <center>
+
+            <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
+            <!--AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO-->
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalFirma"><i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
+        </center>
+
+
+
+        <!--MODAL -->
+        <div class="modal fade" id="modalFirma" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloModal">Ingresar contraseña firma</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                            <input type="password" class="form-control" name="firma" placeholder="Contraseña firma electrónica" required>
+                        </div>
+
+                        {% csrf_token %}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-window-close" id="espaciadoicon"></i>Cancelar</button>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-check-circle" id="espaciadoicon"></i>Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-
-
-</div>
-<br><br> {% endblock %}
+    <br><br> {% endblock %}

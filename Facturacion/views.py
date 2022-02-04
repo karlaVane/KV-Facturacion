@@ -1,8 +1,8 @@
-from tkinter.messagebox import NO
+from http.client import ResponseNotReady
+from pydoc import resolve
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from Facturacion.models import Pedido, Usuario,Contribuyente, Actualizaciones,Consumidor,Detalle_pedido,Establecimiento, Punto_emision, Documento
-from django.http import HttpRequest
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from Facturacion.Core import Actualizacion_pedido, Woocommerce, Sincronizacion
 from datetime import datetime
@@ -81,18 +81,22 @@ def vista_prev_fact(request,num_pedido):
     dig_verificador = doc.digito_verificador(clave_acceso)
     clave_acceso = clave_acceso+dig_verificador
     
+    
     ##
     for det in detalle_pedido:
         sum+= det.subtotal 
     if request.method == 'POST':
-        #consumidor = Consumidor.objects.get(identificacion= pedido.id_consumidor_id)
-        #doc.generar_XML(str(ambiente),tipo_emision, clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),
-        #str(num_emision.num_punto_emision),num_comprobante, fecha2,emisor,consumidor,pedido,detalle_pedido)
-        print("hay q facturar")
-        #print(consumidor.identificacion)
-        #print(num_pedido)
-        a=request.POST['firma']
-        print(a)
+        
+        doc.generar_XML(str(ambiente),tipo_emision, clave_acceso,tipo_comprobante,str(establecimiento.num_establecimiento),
+        str(num_emision.num_punto_emision),num_comprobante, fecha2,emisor,consumidor,pedido,detalle_pedido)
+
+        passfirma=request.POST['firma']
+        respuesta = doc.subproceso(passfirma,num_pedido)
+        if int(respuesta) == 0:
+            messages.error(request,"Contraseña de la firma incorrecta. Vuelve a intentarlo")
+        elif int(respuesta) == 1:
+            messages.success(request,"Documento Generado")
+    
     
     return render(request,'Facturacion/vista_previa.html',
     {"num_pedido":num_pedido, "emisor": emisor, "fecha": fecha_emision,
@@ -117,8 +121,6 @@ def editar_consumidor(request, identificacion,num_pedido):
     consumidor = Consumidor.objects.filter(identificacion= identificacion).first()
     form = FormularioConsumidor(instance=consumidor)
     if request.method == 'POST':
-        print("ENTROOOOOO")
-        print(num_pedido)
         consumidor = Consumidor.objects.get(identificacion= identificacion)
         form = FormularioConsumidor(request.POST, instance=consumidor)
         if form.is_valid():
