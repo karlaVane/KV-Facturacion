@@ -103,7 +103,6 @@ class DocumentoXML:
         arbol.write("Facturacion/XMLs/"+pedido.num_pedido+".xml",encoding="UTF-8",xml_declaration=True)
         
         
-        
     def generar_cod_numerico(self):
         num = 8
         cod=''
