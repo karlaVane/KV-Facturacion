@@ -17,19 +17,15 @@ class Woocommerce:
         )
         
     def obtener_credenciales(self, us_id):
-        for datos in Contribuyente.objects.filter(usuario_id= us_id): #Recibir el correo de quien inicie sesion
+        for datos in Contribuyente.objects.filter(usuario_id= us_id):
             cred1=datos.consumer_key
             cred2=datos.consumer_secret
             url = datos.url_tienda
         return cred1,cred2,url
-
-    def get_pedidos(self, after):
-        url = 'orders/?per_page=100&after={}'.format(after)
-        pedidos = self.wcapi.get(url).json()
-        return pedidos 
     
     def get_pedido(self, id_pedido):
         url = 'orders/' + str(id_pedido)
+        print(url)
         pedido = self.wcapi.get(url).json()
         return pedido
     
@@ -42,6 +38,7 @@ class Woocommerce:
         else:
             ultima_fecha= var.ultima_fecha_pedido
         url='orders/?per_page={}&after={}'.format(cant_pedidos,ultima_fecha)
+        print(url)
         pedido = self.wcapi.get(url).json()
         return pedido,cant_pedidos
 
@@ -94,7 +91,7 @@ class Sincronizacion:
             ultima_fecha_pedido=var.fecha_pedido,
             ultimo_num_pedido = var.num_pedido
         )
-
+   
     ## --------------------------------------- Todo ----------------------------------
     def guardar_todo(self,us_id):
         datos_json = Woocommerce(us_id)
@@ -151,17 +148,10 @@ class Actualizacion_pedido:
         wc= Woocommerce(us_id)
         sincro = Sincronizacion()
         for pedido in pedidos_noC:
-            print("---------------------------------"+pedido)
             datos_pedidos = wc.get_pedido(pedido)
-            print(datos_pedidos['status'])
             consulta=Pedido.objects.get(num_pedido = pedido)
-            print(consulta.estado_pedido)    
-            
             if (consulta.estado_pedido != datos_pedidos['status']):
-                print("Son diferentes - toca actualizar")
                 consulta.estado_pedido =datos_pedidos['status']
                 consulta.save()
-            else:
-                print("Suerte - No ha cambiado nada")
         sincro.guardar_fecha_actualizaciones()
         return

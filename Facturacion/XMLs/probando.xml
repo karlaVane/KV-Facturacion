@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><factura id="comprobante" version="1.0.0"><infoTributaria><ambiente>1</ambiente><tipoEmision>1</tipoEmision><razonSocial>MOYON RIVERA KARLA VANESSA</razonSocial><ruc>1724997950001</ruc><claveAcceso>0402202201172499795000110010020000000011381126613</claveAcceso><codDoc>01</codDoc><estab>001</estab><ptoEmi>002</ptoEmi><secuencial>000000001</secuencial><dirMatriz>Nuevo Sur - Pedro Capiro Oe5-15 y Av. Teniente Hugo Ortiz</dirMatriz></infoTributaria><infoFactura><fechaEmision>04022022</fechaEmision><obligadoContabilidad>NO</obligadoContabilidad><tipoIdentificacionComprador>05</tipoIdentificacionComprador><razonSocialComprador>Jorge Carlos Baquero Duque</razonSocialComprador><identificacionComprador>1719142638</identificacionComprador><direccionComprador>Tababela - 24 de septiembre S/N y Pedro Vallejo</direccionComprador><totalSinImpuestos>9.0</totalSinImpuestos><totalDescuento>0.00</totalDescuento><totalConImpuestos><totalImpuesto><codigo>2</codigo><codigoPorcentaje>0</codigoPorcentaje><descuentoAdicional>0.00</descuentoAdicional><baseImponible>9.0</baseImponible><valor>0.0</valor></totalImpuesto></totalConImpuestos><propina>0.00</propina><importeTotal>9.00</importeTotal><moneda>DOLAR</moneda><pagos><pago><formaPago>20</formaPago><total>9.00</total></pago></pagos></infoFactura><detalles><detalle><codigoPrincipal>AC024</codigoPrincipal><descripcion>Mini Bomba de Agua Sumergible 120L/H</descripcion><cantidad>2</cantidad><precioUnitario>4.50</precioUnitario><descuento>0.00</descuento><precioTotalSinImpuesto>9.00</precioTotalSinImpuesto><impuestos><impuesto><codigo>2</codigo><codigoPorcentaje>0</codigoPorcentaje><tarifa>0</tarifa><baseImponible>9.00</baseImponible><valor>0.00</valor></impuesto></impuestos></detalle></detalles><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature978921">
-<ds:SignedInfo Id="Signature-SignedInfo639602">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><factura id="comprobante" version="1.1.0"><infoTributaria><ambiente>1</ambiente><tipoEmision>1</tipoEmision><razonSocial>MOYON RIVERA KARLA VANESSA</razonSocial><ruc>1724997950001</ruc><claveAcceso>3101202201172499795000110010020000000015362683516</claveAcceso><codDoc>01</codDoc><estab>001</estab><ptoEmi>002</ptoEmi><secuencial>000000001</secuencial><dirMatriz>QUITO, PEDRO CAPIRO OE5-15 AV. TENIENTE HUGO ORTIZ, FRENTE AL CUERPO DE BOMBEROS, NUEVO SUR</dirMatriz></infoTributaria><infoFactura><fechaEmision>31012022</fechaEmision><dirEstablecimiento>QUITO, PEDRO CAPIRO OE5-15 AV. TENIENTE HUGO ORTIZ, FRENTE AL CUERPO DE BOMBEROS, NUEVO SUR</dirEstablecimiento><obligadoContabilidad>NO</obligadoContabilidad><tipoIdentificacionComprador>05</tipoIdentificacionComprador><razonSocialComprador>Xavier Chasi</razonSocialComprador><identificacionComprador>1753244324</identificacionComprador><direccionComprador>El Condado</direccionComprador><totalSinImpuestos>40.0</totalSinImpuestos><totalDescuento>0.00</totalDescuento><totalConImpuestos><totalImpuesto><codigo>2</codigo><codigoPorcentaje>2</codigoPorcentaje><descuentoAdicional>0.00</descuentoAdicional><baseImponible>40.00</baseImponible><valor>4.80</valor></totalImpuesto></totalConImpuestos><propina>0.00</propina><importeTotal>44.80</importeTotal><moneda>DOLAR</moneda><pagos><pago><formaPago>20</formaPago><total>44.80</total></pago></pagos></infoFactura><detalles><detalle><codigoPrincipal>AS024</codigoPrincipal><descripcion>YUN Shield V1.1.6</descripcion><cantidad>1</cantidad><precioUnitario>40.00</precioUnitario><descuento>0.00</descuento><precioTotalSinImpuesto>40.00</precioTotalSinImpuesto><impuestos><impuesto><codigo>2</codigo><codigoPorcentaje>2</codigoPorcentaje><tarifa>12</tarifa><baseImponible>40.00</baseImponible><valor>4.80</valor></impuesto></impuestos></detalle></detalles><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature296026">
+<ds:SignedInfo Id="Signature-SignedInfo546017">
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-<ds:Reference Id="SignedPropertiesID286473" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature978921-SignedProperties23398">
+<ds:Reference Id="SignedPropertiesID361027" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature296026-SignedProperties961163">
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>G1zPxVhnLrdRAOxstwWnSUz3oKI=</ds:DigestValue>
+<ds:DigestValue>kbvri4e/gkvxJ38rxaRYBAzkvVA=</ds:DigestValue>
 </ds:Reference>
-<ds:Reference URI="#Certificate1684728">
+<ds:Reference URI="#Certificate1460219">
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>RJcklo+uZWxWGwxl+taJ/RnB30M=</ds:DigestValue>
+<ds:DigestValue>iP7qw8R9vEruj4pE/7kbX54/Cmg=</ds:DigestValue>
 </ds:Reference>
-<ds:Reference Id="Reference-ID-198199" URI="#comprobante">
+<ds:Reference Id="Reference-ID-607442" URI="#comprobante">
 <ds:Transforms>
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>PHhyaRe6kKvApSzW1gT95k3gDwU=</ds:DigestValue>
+<ds:DigestValue>9HCnDvmcC4oJl36MoZx8/jNbMbo=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue Id="SignatureValue252075">
-uRoWfHs0Mu1jof/7fk2QBx2pqrwgvKTqIYNinzqt6yiRS/FgHAjDiapUTWIYmvbyu+0+CwYTYvzk
-7XKPdWiIqeJVnX6DTlfwEFvA+2+ckiwerPiFaLR7ib7HT9RjBRQmLwrj6Fc5wzzGjxi39HBYjzkQ
-I8TLT1Q3w5FFzZYCpshVmLalwRcgqqiM078+8zLs2zV4sMgWK3GmTD/PWJMSMVz05tZ90sBDC/oh
-mibKwuYrRLiBULB3zBRV17Py5m8tm2GmRm4Eyt3mwXVLrrv9Una4uG8+3zDCDxnY7ybUU/avkrpI
-dp43VAYLdu7/DuG1puYoPN2gnmFmbcAN/S6MiA==
+<ds:SignatureValue Id="SignatureValue962243">
+IxfiusUhYZdWHeZYnsZ60R6ikDLqKrewNL44Be3xtBi7Md4KPnKLa/w2SaICkg7/2BrZMUr3qN+B
+VnQJiMEh89miXcSHI8bergwSw3R28FO+MvqOoQE7mp/dH/tBBW+dC1NNC+WdkUkvnsTGk2Vv+NeA
++uyLaQRYmCm5Ey61qJ1RuYhK07HuErSZGmgJXox70zqVoto5z8QLd1iETgkVSZR838wKIuAVMhHg
+UDJFpoPqY0mT1cXFr3R5/1eAf3DvmBMAD953tvu7PO5rs+32bXNEGJq7GD+RZI8nG1N+Ynic4iqQ
+LSdrYUSGravVxrHX3XK2mM1IeDYn+4E9b8ewWA==
 </ds:SignatureValue>
-<ds:KeyInfo Id="Certificate1684728">
+<ds:KeyInfo Id="Certificate1460219">
 <ds:X509Data>
 <ds:X509Certificate>
 MIIL2TCCCcGgAwIBAgIEUL3CwzANBgkqhkiG9w0BAQsFADCBmTELMAkGA1UEBhMCRUMxHTAbBgNV
@@ -97,4 +97,4 @@ rX8doczEpvSLCaCZCfMuFEikzQEeg6NF3lC6Dw==
 </ds:RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
-<ds:Object Id="Signature978921-Object542294"><etsi:QualifyingProperties Target="#Signature978921"><etsi:SignedProperties Id="Signature978921-SignedProperties23398"><etsi:SignedSignatureProperties><etsi:SigningTime>2022-02-04T17:07:18-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>GkZNchZ5m1reh1g0S5jrFooPBM0=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=AUTORIDAD DE CERTIFICACION SUBCA-2 SECURITY DATA,OU=ENTIDAD DE CERTIFICACION DE INFORMACION,O=SECURITY DATA S.A. 2,C=EC</ds:X509IssuerName><ds:X509SerialNumber>1354613443</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-198199"><etsi:Description>contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>
+<ds:Object Id="Signature296026-Object373876"><etsi:QualifyingProperties Target="#Signature296026"><etsi:SignedProperties Id="Signature296026-SignedProperties961163"><etsi:SignedSignatureProperties><etsi:SigningTime>2022-02-07T02:15:00-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>GkZNchZ5m1reh1g0S5jrFooPBM0=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=AUTORIDAD DE CERTIFICACION SUBCA-2 SECURITY DATA,OU=ENTIDAD DE CERTIFICACION DE INFORMACION,O=SECURITY DATA S.A. 2,C=EC</ds:X509IssuerName><ds:X509SerialNumber>1354613443</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-607442"><etsi:Description>contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>

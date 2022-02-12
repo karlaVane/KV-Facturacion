@@ -1,8 +1,20 @@
+#from osv import osv, fields ##ODoo
+from xml.dom.minidom import parse, parseString
+from Facturacion.sri import Service as SRIService
 import xml.etree.cElementTree as ET 
 import random 
 import subprocess
+import codecs
+try:
+    from suds.client import Client
+    from suds.transport import TransportError
+except ImportError:
+    raise ImportError('Instalar Libreria suds')
+
 
 class DocumentoXML:
+    
+
     def generar_XML(self,ambiente,emision,clave,codDoc,estab,ptoEmi,secuencial,
     fecha, emisor, consumidor, pedido,detalle_pedido):
         factura = ET.Element("factura", id="comprobante", version="1.0.0")
@@ -137,5 +149,43 @@ class DocumentoXML:
         str(num_pedido)+'.xml',shell=True)
         
         return a
+
+    def send_receipt(self):
+        name = r'.\Facturacion\XMLs\1753244324F.xml'
+        cadena = open(name, mode='rb').read()
+        document = parseString(cadena.strip())
+        #xml = document.toxml('UTF-8').encode('base64')
+        
+        xml = document.toxml('UTF-8')
+        
+        print(xml)
+        print(type(document.toxml('UTF-8')))
+        xml = codecs.encode(xml,'base64')
+        print(xml)
+        #print(type(xml))
+        
+        url = SRIService.get_ws_test()[0]
+        client = Client(url, location = url)
+        print(client)
+        """
+        result =  client.service.validarComprobante(xml)
+        print(result[0])
+        
+        print("......................................")
+        #self.__logger.info("RecepcionComprobantes: %s" % result)
+        mensaje_error = ""
+        if (result[0] == 'DEVUELTA'):
+            comprobante = result[1].comprobante
+            mensaje_error += 'Clave de Acceso: ' + comprobante[0].claveAcceso
+            mensajes = comprobante[0].mensajes
+            i = 0
+            mensaje_error += "\nErrores:\n"
+            while i < len(mensajes):
+                mensaje = mensajes[i]
+                mensaje_error += 'Identificador: ' + mensaje[i].identificador + '\nMensaje: ' + mensaje[i].mensaje + '\nInformacion Adicional: ' + mensaje[i].informacionAdicional + '\nTipo: ' + mensaje[i].tipo + "\n"
+                i += 1
+            #raise osv.except_osv('Error SRI', mensaje_error)
+        """
+        return True
         
         

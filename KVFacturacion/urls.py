@@ -22,6 +22,5 @@ urlpatterns = [
     path('accounts/login/',LoginView.as_view(template_name='Facturacion/login.html', redirect_authenticated_user=True),name= 'login'),
     path('logout/',LogoutView.as_view(template_name='Facturacion/login.html'),name='logout'),
     path('admin/', admin.site.urls),
-    path('',include('Facturacion.urls')), #Para enlazar las urls de las aplicaciones con el proyecto
-    
+    path('',include('Facturacion.urls')), #Para enlazar las urls de las aplicaciones con el proyecto 
 ]
