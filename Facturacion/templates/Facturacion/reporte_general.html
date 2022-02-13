@@ -14,17 +14,19 @@
                 </div>
                 <div class="card-body">
                     <div class="row no-gutters justify-content-center" id="card_ventas">
+                        <br><br>
                         <div class="col mr-2 text-center">
-                            <br>
-                            <div class="h2 mb-0 font-weight-bold"> $40,000</div>
-                            </br>
-                            Subtotal: $</br>
-                            IVA: $
+                            <br><br>
+                            <div class="h1 mb-0 font-weight-bold">
+                                ${{total_ventas}}
+                            </div>
+                            <br><br>
+
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-muted" id="centrar">
-                    Transacciones:
+                    Transacciones: {{transacciones}}
                 </div>
             </div>
         </div>
@@ -38,29 +40,22 @@
                     <table class="table table-striped">
                         <thead>
                             <tr class="table-warning">
-                                <th scope="col">#</th>
+
                                 <th scope="col">Producto</th>
                                 <th scope="col">Valor </th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for top in top_pedidos %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td> $</td>
+
+                                <td>{{top.nombre_prod}}</td>
+                                <td> $ {{top.valor_unitario}}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td> $</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td> $</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
+                    Considerar que el valor del producto tiene 4 decimales
 
                 </div>
             </div>
@@ -77,7 +72,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center" id="card_clientes">
                         <div class="col mr-2 text-center">
-                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="h3 mb-0 font-weight-bold">{{num_clientes}}</div>
                             <div class="text-xs font-weight-bold mb-1">
                                 Clientes</div>
                         </div>
@@ -99,7 +94,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center" id="card_consumo_promedio">
                         <div class="col mr-2 text-center">
-                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="h3 mb-0 font-weight-bold"> $ {{consumo_promedio}}</div>
                             <div class="text-xs font-weight-bold mb-1">
                                 Promedio de consumo por compra</div>
                         </div>
@@ -119,7 +114,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center" id="card_promedio_compras">
                         <div class="col mr-2 text-center">
-                            <div class="h3 mb-0 font-weight-bold">40,000</div>
+                            <div class="h3 mb-0 font-weight-bold">$ {{total_impuestos}}</div>
                             <div class="text-xs font-weight-bold mb-1">
                                 Valor IVA</div>
                         </div>

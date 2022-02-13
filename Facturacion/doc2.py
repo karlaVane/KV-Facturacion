@@ -135,7 +135,7 @@ class Factura:
         result =  client.service.validarComprobante(cadena)
         print(result)
         mensaje_error = ""
-        """
+        
         if (result[0] == 'DEVUELTA'):
             comprobante = result[1].comprobante
             mensaje_error += 'Clave de Acceso: ' + comprobante[0].claveAcceso
@@ -147,7 +147,7 @@ class Factura:
                 mensaje_error += 'Identificador: ' + mensaje[i].identificador + '\nMensaje: ' + mensaje[i].mensaje + '\nInformacion Adicional: ' + mensaje[i].informacionAdicional + '\nTipo: ' + mensaje[i].tipo + "\n"
                 i += 1
             print('Error SRI', mensaje_error)
-        """
+        
         return True
     
     def request_authorization(self,access_key):

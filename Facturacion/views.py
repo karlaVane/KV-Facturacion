@@ -53,6 +53,7 @@ def Mis_facturas(request):
 ########## nucleo del proyecto para facturar
 @login_required
 def vista_prev_fact(request,num_pedido):
+    doc = DocumentoXML()
     sum=0
     fecha_emision = datetime.today().strftime('%d/%m/%Y')
     fecha2 = datetime.today().strftime('%d%m%Y')
@@ -63,7 +64,6 @@ def vista_prev_fact(request,num_pedido):
     detalle_pedido = Detalle_pedido.objects.filter(id_pedido_id = num_pedido)
     
     ##
-    doc = DocumentoXML()
     establecimiento = Establecimiento.objects.get(id_usuario_id = emisor.RUC) 
     num_emision = Punto_emision.objects.get(establecimiento_id = establecimiento.num_establecimiento)
     num_comprobante = Documento.objects.order_by('num_comprobante').last()
@@ -107,7 +107,23 @@ def vista_prev_fact(request,num_pedido):
 
 @login_required
 def reporte_general(request):
-    return render(request,'Facturacion/reporte_general.html')
+    reporte = Sincronizacion()
+    num_clientes,total_ventas ,transacciones,consumo_promedio,total_impuestos,top_pedidos = reporte.generar_reporte_general()
+    total_ventas = float(total_ventas['valor_total__sum'])
+    subtotal = round(total_ventas/1.12,2)
+    iva = round((subtotal*12)/100,2)
+    total_ventas = round(total_ventas,2)
+    consumo_promedio = float(consumo_promedio['valor_total__avg'])
+    consumo_promedio = round(consumo_promedio,2)
+    total_impuestos = float (total_impuestos['total_impuestos__sum'])
+    total_impuestos = round(total_impuestos,2)
+    
+    print(top_pedidos)
+    return render(request,'Facturacion/reporte_general.html',{
+        "num_clientes":num_clientes, "total_ventas":total_ventas ,
+        "transacciones": transacciones,"consumo_promedio":consumo_promedio,
+        "total_impuestos":total_impuestos,"top_pedidos":top_pedidos, "subtotal":subtotal,
+        "iva":iva})
 
 @login_required
 def mis_datos(request):

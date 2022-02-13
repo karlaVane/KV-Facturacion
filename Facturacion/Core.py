@@ -1,8 +1,12 @@
+from datetime import date
 from django.http import request
 from Facturacion.models import Contribuyente,Detalle_pedido, Pedido, Consumidor,Actualizaciones, Valores
 from woocommerce import API
 import time
 import locale
+from django.db.models import Avg, Sum
+import datetime as time
+from django.db.models import Count
 
 class Woocommerce:
     def __init__(self,us_id):
@@ -135,6 +139,35 @@ class Sincronizacion:
         # Tabla actualizaciones
         self.guardar_fecha_actualizaciones()
 
+    def generar_reporte_general(self):
+        actual = time.datetime.utcnow() #Fecha actual
+        fecha_limite = actual - time.timedelta(days=30) #Fecha actual - 30 días
+        actual = str(actual.strftime("%Y-%m-%dT%H:%M:%S"))
+        fecha_limite = str(fecha_limite.strftime("%Y-%m-%dT%H:%M:%S"))
+
+        num_clientes = Pedido.objects.filter(
+        fecha_pedido__gte=str(fecha_limite), 
+        fecha_pedido__lte=str(actual)).values("id_consumidor_id").distinct().count()
+        
+        total_ventas = Pedido.objects.filter(
+        fecha_pedido__gte=str(fecha_limite), 
+        fecha_pedido__lte=str(actual)).aggregate(Sum('valor_total'))
+        
+        transacciones = Pedido.objects.filter(
+        fecha_pedido__gte=str(fecha_limite), 
+        fecha_pedido__lte=str(actual)).count()
+
+        consumo_promedio = Pedido.objects.filter(
+        fecha_pedido__gte=str(fecha_limite), 
+        fecha_pedido__lte=str(actual)).aggregate(Avg("valor_total"))
+        
+        total_impuestos= Pedido.objects.filter(
+        fecha_pedido__gte=str(fecha_limite), 
+        fecha_pedido__lte=str(actual)).aggregate(Sum('total_impuestos'))
+               
+        top_pedidos = Detalle_pedido.objects.annotate(pedidos=Count('nombre_prod')).order_by('-pedidos')[:3]
+        return num_clientes, total_ventas , transacciones,consumo_promedio,total_impuestos,top_pedidos
+
 
 class Actualizacion_pedido:
     
@@ -155,3 +188,4 @@ class Actualizacion_pedido:
                 consulta.save()
         sincro.guardar_fecha_actualizaciones()
         return
+
