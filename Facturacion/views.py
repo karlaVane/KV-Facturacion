@@ -95,7 +95,9 @@ def vista_prev_fact(request,num_pedido):
         if int(respuesta) == 0:
             messages.error(request,"Contraseña de la firma incorrecta. Vuelve a intentarlo")
         elif int(respuesta) == 1:
-            messages.success(request,"Documento Generado")
+            messages.success(request,"Documento XML Generado")
+            pedido.esta_facturado = "Autorizado"
+            pedido.save()  
     
     
     return render(request,'Facturacion/vista_previa.html',

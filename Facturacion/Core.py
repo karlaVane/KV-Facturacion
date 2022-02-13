@@ -5,7 +5,7 @@ from woocommerce import API
 import time
 import locale
 from django.db.models import Avg, Sum
-import datetime as time
+import datetime as dtime
 from django.db.models import Count
 
 class Woocommerce:
@@ -61,6 +61,10 @@ class Sincronizacion:
     ## --------------------------------------- Tabla Pedido ----------------------------------
     def guardar_pedidos(self,pedido,cedula,fecha,estado,href,total,t_imp, us_id):
         total_compra = float(total) + float(t_imp)
+        if(estado=="cancelled"):
+            esta_facturado = "No se factura"
+        else:
+            esta_facturado = "Sin facturar"
         Pedido.objects.create(
             num_pedido = pedido,
             id_consumidor = Consumidor.objects.get(identificacion=cedula),
@@ -71,7 +75,8 @@ class Sincronizacion:
             valor_total = float(total),
             total_impuestos = float(t_imp),
             total_compra = total_compra,
-            id_contribuyente = Contribuyente.objects.get(usuario_id =us_id)
+            id_contribuyente = Contribuyente.objects.get(usuario_id =us_id),
+            esta_facturado = esta_facturado
         )
     ## ---------------------------------- Tabla Detalle Pedido ----------------------------------
     def guardar_detalle_pedidos(self,id_pedido,sku,nombre_prod,cant,unitario,subtotal,sub_impuestos):
@@ -140,8 +145,8 @@ class Sincronizacion:
         self.guardar_fecha_actualizaciones()
 
     def generar_reporte_general(self):
-        actual = time.datetime.utcnow() #Fecha actual
-        fecha_limite = actual - time.timedelta(days=30) #Fecha actual - 30 días
+        actual = dtime.datetime.utcnow() #Fecha actual
+        fecha_limite = actual - dtime.timedelta(days=30) #Fecha actual - 30 días
         actual = str(actual.strftime("%Y-%m-%dT%H:%M:%S"))
         fecha_limite = str(fecha_limite.strftime("%Y-%m-%dT%H:%M:%S"))
 
@@ -188,4 +193,5 @@ class Actualizacion_pedido:
                 consulta.save()
         sincro.guardar_fecha_actualizaciones()
         return
+
 

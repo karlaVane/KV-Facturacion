@@ -13,6 +13,22 @@
     </div>
     {% endfor %} {% endif %}
     <!---->
+
+    {% if pedido.estado_pedido != 'completed'%}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>No se puede facturar. </strong>Estado del pedido no está completado
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    {% endif %} {% if pedido.esta_facturado == "Autorizado" %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        El pedido ya está facturado
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    {% endif %}
     <br>
     <div class="container">
         <div class="row">
@@ -184,7 +200,8 @@
 
             <a href="{% url 'MisFacturas' %}" type="button" class="btn btn-warning"> <i class="fas fa-undo-alt" id="espaciadoicon"></i>REGRESAR</a>
             <!--AQUI VA SENTENCIA PARA VER SI YA ESTÁ FACTURADO-->
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalFirma"><i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button>
+            {% if pedido.estado_pedido == 'completed' and pedido.esta_facturado == 'Sin facturar' %}
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalFirma"><i class="fas fa-file-export" id="espaciadoicon"></i>FACTURAR</button> {% endif %}
         </center>
 
 

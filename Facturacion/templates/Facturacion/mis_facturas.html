@@ -78,7 +78,15 @@
                             {% elif pedido.estado_pedido == 'trash' %}
                             <td id="estado_trash"> Basura </td>
                             {% endif %}
-                            <td> </td>
+
+                            {% if pedido.esta_facturado == 'Sin facturar' %}
+                            <td> {{pedido.esta_facturado}} </td>
+                            {% elif pedido.esta_facturado == 'No se factura' %}
+                            <td id="estado_cancelado"> {{pedido.esta_facturado}} </td>
+                            {% elif pedido.esta_facturado == 'Autorizado' %}
+                            <td id="estado_completo"> {{pedido.esta_facturado}} </td>
+                            {% endif %}
+                            
                             <td class="text-center">
                                 <a href="{%url 'VistaPrevia' pedido.num_pedido %}"><i class="far fa-eye" id="icon_visualizar"></i>Ver</a>
                                 

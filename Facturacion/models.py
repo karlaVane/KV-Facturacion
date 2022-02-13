@@ -73,7 +73,7 @@ class Pedido (models.Model):
     valor_transporte = models.DecimalField(max_digits=9, decimal_places=4,default=0)
     total_compra = models.DecimalField(max_digits=9, decimal_places=4,default=0)
     id_contribuyente = models.ForeignKey(Contribuyente,on_delete=models.CASCADE,null=True)
-    esta_facturado= models.BooleanField(default=False)
+    esta_facturado= models.CharField(default="Sin facturar", max_length=100)
 
 class Detalle_pedido(models.Model):
     id_pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE,null=False)
