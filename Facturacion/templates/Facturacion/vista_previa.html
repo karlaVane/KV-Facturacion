@@ -1,36 +1,36 @@
 {% extends "Facturacion/base.html" %} {% load static %} {% block content %}
 <br>
 <h3 class="text-center" id="datos"><b>Vista Previa Pedido:</b> {{ num_pedido }}</h3>
-<!-- MENSAJES -->
-{% if messages %} {% for message in messages %} {% if message.tags == "error" %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {% else %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {% endif %} {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<br>
+<div class="container">
+    <!-- MENSAJES -->
+    {% if messages %} {% for message in messages %} {% if message.tags == "error" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% endif %} {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    </div>
-    {% endfor %} {% endif %}
-    <!---->
+        </div>
+        {% endfor %} {% endif %}
+        <!---->
 
-    {% if pedido.estado_pedido != 'completed'%}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>No se puede facturar. </strong>Estado del pedido no está completado
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    {% endif %} {% if pedido.esta_facturado == "Autorizado" %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        El pedido ya está facturado
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    {% endif %}
-    <br>
-    <div class="container">
+        {% if pedido.estado_pedido != 'completed'%}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>No se puede facturar. </strong>Estado del pedido no está completado
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        {% endif %} {% if pedido.esta_facturado == "Autorizado" %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            El pedido ya está facturado
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-xl-6">
                 <img src="{% static 'images/logo.png' %}" width="180" height="80">
@@ -155,7 +155,8 @@
         <br><br><br><br>
         <div class="row">
             <div class="col-xl-7" id="borde_div">
-                <label class="text-center"><b>Información Adicional</b></label>
+                <label class="text-center"><b>Información Adicional</b></label><br>
+                <b>RIMPE: </b> Populares
             </div>
             <div class="col-xl-5" id="borde_div">
 
